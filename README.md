@@ -1,4 +1,6 @@
 # Docker PHP Apache
-Another set of PHP + Apache Docker images. Get a symfony default configuration for PHP 7+.
+A Docker image for PHP apps. Works with Apache and PHP 5.6,7.1,7.2 and with a Symfony variant.
 
-Demo for PHP 7.2 : https://labs.sainthillier.fr/php
+* Demo: https://labs.sainthillier.fr/php
+* Demo (404): https://labs.sainthillier.fr/php/notfound
+* Docker image: https://hub.docker.com/r/silarhi/php-apache
