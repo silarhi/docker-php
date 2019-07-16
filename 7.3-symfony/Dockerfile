@@ -1,7 +1,8 @@
-FROM guystlr/php-apache:7.3
+FROM silarhi/php-apache:7.3
 
 RUN apt-get update -q && \
     apt-get install -qy  \
+    libzip-dev \
     zlib1g-dev && \
 	curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y nodejs && \
@@ -11,7 +12,8 @@ RUN apt-get update -q && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # PHP Extensions
-RUN docker-php-ext-install -j$(nproc) intl zip
+RUN docker-php-ext-configure zip --with-libzip && \
+	docker-php-ext-install -j$(nproc) intl zip
 
 # Apache
 ADD conf/vhost.conf /etc/apache2/sites-available/000-default.conf
