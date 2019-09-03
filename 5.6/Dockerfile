@@ -5,6 +5,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 EXPOSE 80
 WORKDIR /app
 
+# git, unzip & zip are for composer
 RUN apt-get update -qy && \
     apt-get install -y \
     git \
