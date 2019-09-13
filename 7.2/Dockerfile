@@ -6,8 +6,8 @@ EXPOSE 80
 WORKDIR /app
 
 # git, unzip & zip are for composer
-RUN apt-get update -qy && \
-    apt-get install -y \
+RUN apt-get update -qq && \
+    apt-get install -qy \
     git \
     gnupg \
     iputils-ping \
