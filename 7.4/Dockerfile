@@ -10,8 +10,6 @@ RUN apt-get update -qq && \
     apt-get install -qy \
     git \
     gnupg \
-    iputils-ping \
-    libicu-dev \
     unzip \
     zip && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \

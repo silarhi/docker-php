@@ -5,9 +5,14 @@ EXPOSE 80
 
 RUN apt-get update -qq && \
     apt-get install -qy \
+    git \
+    gnupg \
     libicu-dev \
     libzip-dev \
+    unzip \
+    zip \
     zlib1g-dev && \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # PHP Extensions
