@@ -16,4 +16,4 @@ RUN docker-php-ext-configure zip --with-libzip && \
 	docker-php-ext-install -j$(nproc) intl zip
 
 # Apache
-ADD conf/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
