@@ -1,5 +1,7 @@
 FROM silarhi/php-apache:7.2
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 WORKDIR /app
 EXPOSE 80
 
