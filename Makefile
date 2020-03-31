@@ -9,6 +9,8 @@ build:
 	docker build -t silarhi/php-apache:7.3-symfony 7.3-symfony
 	docker build -t silarhi/php-apache:7.2 7.2
 	docker build -t silarhi/php-apache:7.2-symfony 7.2-symfony
+	docker build -t silarhi/php-apache:7.1 7.1
+	docker build -t silarhi/php-apache:7.1-symfony 7.1-symfony
 	docker build -t silarhi/php-apache:5.6 5.6
 
 publish:
