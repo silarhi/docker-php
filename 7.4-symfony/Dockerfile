@@ -2,8 +2,8 @@ FROM php:7.4-apache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-WORKDIR /app
 EXPOSE 80
+WORKDIR /app
 
 RUN apt-get update -qq && \
     apt-get install -qy \
@@ -19,13 +19,14 @@ RUN apt-get update -qq && \
 
 # PHP Extensions
 RUN docker-php-ext-configure zip && \
-	docker-php-ext-install -j$(nproc) opcache pdo_mysql intl zip
+    docker-php-ext-install -j$(nproc) intl opcache pdo_mysql zip
 COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache
 COPY errors /errors
-RUN a2enmod rewrite remoteip
 COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY conf/apache.conf /etc/apache2/conf-available/z-app.conf
-RUN a2enconf z-app
 COPY index.php /app/index.php
+
+RUN a2enmod rewrite remoteip && \
+    a2enconf z-app

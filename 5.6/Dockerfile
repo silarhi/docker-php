@@ -23,8 +23,9 @@ COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache
 COPY errors /errors
-RUN a2enmod rewrite remoteip
 COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY conf/apache.conf /etc/apache2/conf-available/z-app.conf
-RUN a2enconf z-app
 COPY index.php /app/index.php
+
+RUN a2enmod rewrite remoteip && \
+    a2enconf z-app

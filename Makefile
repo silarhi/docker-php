@@ -1,8 +1,12 @@
-.PHONY = all build
+.PHONY = all build publish update
 
 all: build
 
+update:
+	./update.sh
+
 build:
+	$(update)
 	docker build -t silarhi/php-apache:7.4 -t silarhi/php-apache:latest 7.4
 	docker build -t silarhi/php-apache:7.4-symfony 7.4-symfony
 	docker build -t silarhi/php-apache:7.3 7.3
