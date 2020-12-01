@@ -7,7 +7,9 @@ update:
 
 build:
 	$(update)
-	docker build -t silarhi/php-apache:7.4 -t silarhi/php-apache:latest 7.4
+	docker build -t silarhi/php-apache:8.0 -t silarhi/php-apache:latest 8.0
+	docker build -t silarhi/php-apache:8.0-symfony 8.0-symfony
+	docker build -t silarhi/php-apache:7.4 7.4
 	docker build -t silarhi/php-apache:7.4-symfony 7.4-symfony
 	docker build -t silarhi/php-apache:7.3 7.3
 	docker build -t silarhi/php-apache:7.3-symfony 7.3-symfony
