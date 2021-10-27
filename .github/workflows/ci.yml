@@ -11,24 +11,23 @@ jobs:
     strategy:
       matrix:
         path-and-tag:
-          - '8.0:latest'
-          - '8.0:8.0'
-          - '8.0-symfony:8.0-symfony'
+          - '8.0|silarhi/php-apache:8.0,silarhi/php-apache:latest'
+          - '8.0-symfony|silarhi/php-apache:8.0-symfony'
           - '7.4'
-          - '7.4-symfony:7.4-symfony'
+          - '7.4-symfony|silarhi/php-apache:7.4-symfony'
           - '7.3'
-          - '7.3-symfony:7.3-symfony'
+          - '7.3-symfony|silarhi/php-apache:7.3-symfony'
           - '7.2'
-          - '7.2-symfony:7.2-symfony'
+          - '7.2-symfony|silarhi/php-apache:7.2-symfony'
           - '7.1'
-          - '7.1-symfony:7.1-symfony'
+          - '7.1-symfony|silarhi/php-apache:7.1-symfony'
           - '5.6'
     steps:
       - uses: rishabhgupta/split-by@v1
         id: split
         with:
           string: ${{ matrix.path-and-tag }}
-          split-by: ':'
+          split-by: '|'
       -
         name: Checkout
         uses: actions/checkout@v2
@@ -50,5 +49,5 @@ jobs:
         with:
           context: ${{ steps.split.outputs._0}}
           platforms: linux/amd64,linux/arm64
-          tags: ${{ format('silarhi/php-apache:{0}', steps.split.outputs._1) }}
+          tags: ${{ steps.split.outputs._1}}
           push: true
