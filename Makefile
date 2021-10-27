@@ -7,17 +7,17 @@ update:
 
 build:
 	$(update)
-	docker build -t silarhi/php-apache:8.0 -t silarhi/php-apache:latest 8.0
-	docker build -t silarhi/php-apache:8.0-symfony 8.0-symfony
-	docker build -t silarhi/php-apache:7.4 7.4
-	docker build -t silarhi/php-apache:7.4-symfony 7.4-symfony
-	docker build -t silarhi/php-apache:7.3 7.3
-	docker build -t silarhi/php-apache:7.3-symfony 7.3-symfony
-	docker build -t silarhi/php-apache:7.2 7.2
-	docker build -t silarhi/php-apache:7.2-symfony 7.2-symfony
-	docker build -t silarhi/php-apache:7.1 7.1
-	docker build -t silarhi/php-apache:7.1-symfony 7.1-symfony
-	docker build -t silarhi/php-apache:5.6 5.6
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.0 --no-cache -t silarhi/php-apache:latest 8.0
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.0-symfony 8.0-symfony
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:7.4 7.4
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:7.4-symfony 7.4-symfony
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:7.3 7.3
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:7.3-symfony 7.3-symfony
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:7.2 7.2
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:7.2-symfony 7.2-symfony
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:7.1 7.1
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:7.1-symfony 7.1-symfony
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:5.6 5.6
 
 publish:
-	docker push silarhi/php-apache
+	docker push silarhi/php-apache --all-tags
