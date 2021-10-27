@@ -4,68 +4,53 @@ on:
   push:
     branches:
       - 'main'
-  # schedule:
-    # - cron: 0 0 * * 0
+  schedule:
+    - cron: 0 0 * * 0
 
 jobs:
-  generate-jobs:
-    name: Generate Jobs
+  docker:
     runs-on: ubuntu-latest
-    outputs:
-      strategy: ${{ steps.generate-jobs.outputs.strategy }}
+    strategy:
+      matrix:
+        path-and-tag:
+          - '8.0:latest'
+          - '8.0:8.0'
+          - '8.0-symfony:8.0-symfony'
+          - '7.4:7.4'
+          - '7.4-symfony:7.4-symfony'
+          - '7.3:7.3'
+          - '7.3-symfony:7.3-symfony'
+          - '7.2:7.2'
+          - '7.2-symfony:7.2-symfony'
+          - '7.1:7.1'
+          - '7.1-symfony:7.1-symfony'
+          - '5.6:5.6'
     steps:
-      - uses: actions/checkout@v1
-      - id: generate-jobs
-        name: Generate Jobs
-        run: |
-          git clone --depth 1 https://github.com/docker-library/bashbrew.git -b master ~/bashbrew
-          strategy="$(~/bashbrew/scripts/github-actions/generate.sh)"
-          jq . <<<"$strategy" # sanity check / debugging aid
-          echo "::set-output name=strategy::$strategy"
-
-  # docker:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       path-and-tag:
-  #         - '8.0:latest'
-  #         - '8.0:8.0'
-  #         - '8.0-symfony:8.0-symfony'
-  #         - '7.4:7.4'
-  #         - '7.4-symfony:7.4-symfony'
-  #         - '7.3:7.3'
-  #         - '7.3-symfony:7.3-symfony'
-  #         - '7.2:7.2'
-  #         - '7.2-symfony:7.2-symfony'
-  #         - '7.1:7.1'
-  #         - '7.1-symfony:7.1-symfony'
-  #         - '5.6:5.6'
-  #   steps:
-  #     - uses: rishabhgupta/split-by@v1
-  #       id: split
-  #       with:
-  #         string: ${{ matrix.path-and-tag }}
-  #         split-by: ':'
-  #     -
-  #       name: Checkout
-  #       uses: actions/checkout@v2
-  #     -
-  #       name: Set up QEMU
-  #       uses: docker/setup-qemu-action@v1
-  #     -
-  #       name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v1
-  #     -
-  #       name: Login to DockerHub
-  #       uses: docker/login-action@v1
-  #       with:
-  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
-  #     -
-  #       name: Build and push
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         context: ${{ steps.split.outputs._0}}
-  #         platforms: linux/amd64,linux/arm64
-  #         tags: ${{ format('silarhi/php-apache:{0}', steps.split.outputs._1) }}
-  #         push: true
+      - uses: rishabhgupta/split-by@v1
+        id: split
+        with:
+          string: ${{ matrix.path-and-tag }}
+          split-by: ':'
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ steps.split.outputs._0}}
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ format('silarhi/php-apache:{0}', steps.split.outputs._1) }}
+          push: true
