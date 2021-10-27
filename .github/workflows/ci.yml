@@ -50,5 +50,5 @@ jobs:
         with:
           context: ${{ steps.split.outputs._0}}
           platforms: linux/amd64,linux/arm64
-          tags: "silarhi/php-apache:${{ steps.split.outputs._1 }}"
+          tags: ${{ format('silarhi/php-apache:{0}', steps.split.outputs._1) }}
           push: true
