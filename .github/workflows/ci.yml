@@ -10,31 +10,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        path-and-tags:
-          - '8.0|8.0,latest'
-          - '8.0'
+        path-and-tag:
+          - '8.0:latest'
+          - '8.0:8.0'
+          - '8.0-symfony:8.0-symfony'
           - '7.4'
-          - '7.4'
+          - '7.4-symfony:7.4-symfony'
           - '7.3'
-          - '7.3'
+          - '7.3-symfony:7.3-symfony'
           - '7.2'
-          - '7.2'
+          - '7.2-symfony:7.2-symfony'
           - '7.1'
-          - '7.1'
+          - '7.1-symfony:7.1-symfony'
           - '5.6'
     steps:
-      - name: View context attributes
-        uses: actions/github-script@v5
+      - uses: rishabhgupta/split-by@v1
+        id: split
         with:
-          script: console.log(context)
-      - id: get-id
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const parts = context.matrix['path-and-tags'].value.split('-')
-            core.setOutput('path', parts[0])
+          string: ${{ matrix.path-and-tag }}
+          split-by: ':'
 
-      - run: echo "${{ steps.get-id.outputs.path }}"
+      - run: echo "${{ steps.split.outputs._0}}"
+      - run: echo "${{ steps.split.outputs._1}}"
       # -
       #   name: Checkout
       #   uses: actions/checkout@v2
