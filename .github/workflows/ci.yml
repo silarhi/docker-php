@@ -11,43 +11,46 @@ jobs:
     strategy:
       matrix:
         path-and-tags:
-          - '8.0#silarhi/php-apache:8.0,silarhi/php-apache:latest'
-          - '8.0-symfony#silarhi/php-apache:8.0-symfony'
-          - '7.4#silarhi/php-apache:7.4'
-          - '7.4-symfony#silarhi/php-apache:7.4-symfony'
-          - '7.3#silarhi/php-apache:7.3'
-          - '7.3-symfony#silarhi/php-apache:7.3-symfony'
-          - '7.2#silarhi/php-apache:7.2'
-          - '7.2-symfony#silarhi/php-apache:7.2-symfony'
-          - '7.1#silarhi/php-apache:7.1'
-          - '7.1-symfony#silarhi/php-apache:7.1-symfony'
-          - '5.6#silarhi/php-apache:5.6'
+          - '8.0|8.0,latest'
+          - '8.0'
+          - '7.4'
+          - '7.4'
+          - '7.3'
+          - '7.3'
+          - '7.2'
+          - '7.2'
+          - '7.1'
+          - '7.1'
+          - '5.6'
     steps:
-      - uses: jungwinter/split@v2
-        id: split
+      - id: get-id
+        uses: actions/github-script@0.9.0
         with:
-          separator: '#'
-          msg: ${{ matrix.path-and-tags }}
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: ${{ steps.split.outputs._0 }}
-          platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.split.outputs._1 }}
-          push: true
+          script: |
+            const parts = context.matrix['path-and-tags'].value.split('-')
+            core.setOutput('path', parts[0])
+
+      - run: echo "${{ steps.get-id.outputs.path }}"
+      # -
+      #   name: Checkout
+      #   uses: actions/checkout@v2
+      # -
+      #   name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v1
+      # -
+      #   name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
+      # -
+      #   name: Login to DockerHub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # -
+      #   name: Build and push
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: ${{ steps.split.outputs._0 }}
+      #     platforms: linux/amd64,linux/arm64
+      #     tags: ${{ steps.split.outputs._1 }}
+      #     push: true
