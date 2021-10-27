@@ -26,7 +26,9 @@ jobs:
           - '7.1-symfony:7.1-symfony'
           - '5.6:5.6'
     steps:
-      - uses: rishabhgupta/split-by@v1
+      - 
+        name: Prepare paths and tags
+        uses: rishabhgupta/split-by@v1
         id: split
         with:
           string: ${{ matrix.path-and-tag }}
@@ -50,7 +52,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ${{ steps.split.outputs._0}}
+          context: ${{ steps.split.outputs._0 }}
           platforms: linux/amd64,linux/arm64
           tags: ${{ format('silarhi/php-apache:{0}', steps.split.outputs._1) }}
           push: true
