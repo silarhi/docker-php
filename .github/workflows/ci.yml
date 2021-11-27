@@ -11,9 +11,12 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         path-and-tag:
-          - '8.0:latest'
+          - '8.1:latest'
+          - '8.1:8.1'
+          - '8.1-symfony:8.1-symfony'
           - '8.0:8.0'
           - '8.0-symfony:8.0-symfony'
           - '7.4:7.4'
