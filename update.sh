@@ -5,6 +5,8 @@ set -e
 for version in *; do
 	[ -d "$version" ] || continue
 	[[ "$version" != "_shared" ]] || continue
+	[[ "$version" != *"-ci" ]] || continue
+
 	cp -R _shared/* "$version"
 
 	if [[ "$version" == *"-symfony"* ]]; then
