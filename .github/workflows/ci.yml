@@ -15,8 +15,10 @@ jobs:
       matrix:
         path-and-tag:
           - '8.1:latest'
+          - '8.1-cli:8.1-cli'
           - '8.1:8.1'
           - '8.1-symfony:8.1-symfony'
+          - '8.0-cli:8.0-cli'
           - '8.0:8.0'
           - '8.0-symfony:8.0-symfony'
           - '7.4-cli:7.4-cli'
