@@ -44,7 +44,7 @@ body {
     display: inline-block;
     width: 140px;
     height: 140px;
-    background-image: url('../img/emoji.png');
+    background-image: url('/_errors/img/emoji.png');
     background-size: cover;
 }
 
