@@ -35,6 +35,6 @@ ENV PHPIZE_DEPS \
 
 RUN apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS && \
-    docker-php-ext-install -j$(nproc) opcache zip && \
+    docker-php-ext-install -j$(nproc) intl opcache zip && \
     apk del .build-deps && \
     rm -rf /var/cache/apk/* /tmp/*
