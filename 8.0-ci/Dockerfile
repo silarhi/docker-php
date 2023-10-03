@@ -7,6 +7,7 @@ WORKDIR /app
 # Install dependencies
 RUN apk add --no-cache \
     bash \
+    icu \
     libxml2 \
     libzip \
     git \

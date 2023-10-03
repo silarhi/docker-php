@@ -8,6 +8,7 @@ WORKDIR /app
 RUN apk add --no-cache \
     bash \
     libxml2 \
+    icu \
     libzip \
     git \
     zlib && \
