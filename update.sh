@@ -14,4 +14,11 @@ for version in *; do
 	else
 		rm "$version/conf/vhost-symfony.conf"
 	fi
+
+	if [[ "$version" != *"-frankenphp"* ]]; then
+    rm "$version/conf/Caddyfile"
+  else
+    rm "$version/conf/apache.conf" "$version/conf/vhost.conf"
+    rm -rf "$version/errors"
+  fi
 done
