@@ -3,6 +3,8 @@ FROM dunglas/frankenphp:1-php8.2-bookworm
 EXPOSE 80
 WORKDIR /app
 
+HEALTHCHECK CMD curl -f http://localhost || exit 1
+
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV SERVER_NAME=:80
 

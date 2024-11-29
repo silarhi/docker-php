@@ -5,6 +5,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 EXPOSE 80
 WORKDIR /app
 
+HEALTHCHECK CMD curl -f http://localhost || exit 1
+
 #Update stretch repositories
 RUN sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list && \
     sed -i 's|security.debian.org|archive.debian.org/|g' /etc/apt/sources.list && \

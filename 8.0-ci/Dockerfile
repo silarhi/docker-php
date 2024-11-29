@@ -4,6 +4,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 WORKDIR /app
 
+HEALTHCHECK CMD curl -f http://localhost || exit 1
+
 # Install dependencies
 RUN apk add --no-cache \
     bash \

@@ -5,6 +5,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 EXPOSE 80
 WORKDIR /app
 
+HEALTHCHECK CMD curl -f http://localhost || exit 1
+
 # git, unzip & zip are for composer
 RUN apt-get update -qq && \
     apt-get install -qy \
