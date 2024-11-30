@@ -4,7 +4,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 WORKDIR /app
 
-HEALTHCHECK CMD curl -f http://localhost || exit 1
+HEALTHCHECK --interval=1m --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost/_health || exit 1
 
 # Install dependencies
 RUN apk add --no-cache \

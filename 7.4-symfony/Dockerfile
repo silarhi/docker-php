@@ -5,7 +5,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 EXPOSE 80
 WORKDIR /app
 
-HEALTHCHECK CMD curl -f http://localhost || exit 1
+HEALTHCHECK --interval=1m --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost/_health || exit 1
 
 RUN apt-get update -qq && \
     apt-get install -qy \
@@ -26,6 +27,7 @@ COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache
 COPY errors /errors
+COPY health.php /health/index.php
 COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY conf/apache.conf /etc/apache2/conf-available/z-app.conf
 COPY index.php /app/index.php
