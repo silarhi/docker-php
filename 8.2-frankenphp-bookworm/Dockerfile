@@ -3,6 +3,9 @@ FROM dunglas/frankenphp:1-php8.2-bookworm
 EXPOSE 80
 WORKDIR /app
 
+HEALTHCHECK --interval=1m --timeout=3s --start-period=5s --start-interval=1s --retries=3 \
+    CMD curl -f http://localhost:2019/metrics || exit 1
+
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV SERVER_NAME=:80
 
