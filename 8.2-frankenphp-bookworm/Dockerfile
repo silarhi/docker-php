@@ -13,7 +13,7 @@ RUN apt-get update -qq && \
     gnupg \
     unzip \
     zip && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get clean && rm -rf /var/lib/apt/lists/* /var/log/*
 
 # PHP Extensions
 RUN install-php-extensions @composer opcache pdo_mysql

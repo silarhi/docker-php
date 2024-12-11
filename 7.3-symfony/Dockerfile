@@ -24,7 +24,7 @@ RUN apt-get update -qq && \
     zip \
     zlib1g-dev && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get clean && rm -rf /var/lib/apt/lists/* /var/log/*
 
 # PHP Extensions
 RUN docker-php-ext-configure zip --with-libzip && \
