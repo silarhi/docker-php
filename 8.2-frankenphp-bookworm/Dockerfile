@@ -20,8 +20,8 @@ RUN apt-get update -qq && \
 RUN install-php-extensions opcache pdo_mysql
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-COPY conf/php.ini $PHP_INI_DIR/conf.d/app.ini
+COPY --link conf/php.ini $PHP_INI_DIR/conf.d/app.ini
 
 # Caddy
 COPY --link conf/Caddyfile /etc/caddy/Caddyfile
-COPY index.php /app/public/index.php
+COPY --link index.php /app/public/index.php
