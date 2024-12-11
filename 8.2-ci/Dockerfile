@@ -16,9 +16,7 @@ RUN apk add --no-cache \
     git \
     zlib && \
     #Composer
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    # Reduce layer size
-    rm -rf /var/cache/apk/* /tmp/*
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # PHP Extensions
 ENV PHPIZE_DEPS \
