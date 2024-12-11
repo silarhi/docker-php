@@ -19,7 +19,7 @@ RUN apk add --no-cache \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # PHP Extensions
-ENV PHPIZE_DEPS \
+ENV PHPIZE_DEPS="\
     autoconf \
     cmake \
     file \
@@ -33,7 +33,7 @@ ENV PHPIZE_DEPS \
     pcre-dev \
     pkgconf \
     re2c \
-    zlib-dev
+    zlib-dev"
 
 RUN apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS && \
