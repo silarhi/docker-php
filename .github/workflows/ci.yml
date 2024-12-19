@@ -14,7 +14,12 @@ jobs:
       fail-fast: false
       matrix:
         path-and-tag:
-          - '8.3:latest'
+          - '8.4:latest'
+          - '8.4-ci:8.4-ci'
+          - '8.4:8.4'
+          - '8.4-frankenphp-alpine:8.4-frankenphp-alpine'
+          - '8.4-frankenphp-bookworm:8.4-frankenphp-bookworm'
+          - '8.4-symfony:8.4-symfony'
           - '8.3-ci:8.3-ci'
           - '8.3:8.3'
           - '8.3-frankenphp-alpine:8.3-frankenphp-alpine'
