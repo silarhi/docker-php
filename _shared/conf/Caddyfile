@@ -1,4 +1,10 @@
 {
+	servers {
+		trusted_proxies {$CADDY_TRUSTED_PROXIES:static private_ranges} 
+		{$CADDY_TRUSTED_PROXIES_STRICT:trusted_proxies_strict} 
+		{$CADDY_SERVERS_CONFIG}
+	}
+
 	{$CADDY_GLOBAL_OPTIONS}
 
 	frankenphp {
