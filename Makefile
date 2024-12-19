@@ -7,7 +7,6 @@ update:
 
 build:
 	$(update)
-	docker buildx create --use --platform=linux/arm64/v8,linux/amd64 --name multi-platform-builder
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.3 --no-cache -t silarhi/php-apache:latest 8.3
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.3-frankenphp-alpine 8.3-frankenphp-alpine
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.3-frankenphp-bookworm 8.3-frankenphp-bookworm
@@ -23,7 +22,6 @@ build:
 
 build-legacy:
 	$(update)
-	docker buildx create --use --platform=linux/arm64/v8,linux/amd64 --name multi-platform-builder
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.0 8.0
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.0-ci 8.0-ci
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.0-symfony 8.0-symfony
