@@ -8,6 +8,10 @@ update:
 	./update.sh
 
 build: update
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.4 -t silarhi/php-apache:latest 8.4
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.4-frankenphp-alpine 8.4-frankenphp-alpine
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.4-frankenphp-bookworm 8.4-frankenphp-bookworm
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.4-symfony 8.4-symfony
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.3 8.3
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.3-frankenphp-alpine 8.3-frankenphp-alpine
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.3-frankenphp-bookworm 8.3-frankenphp-bookworm
