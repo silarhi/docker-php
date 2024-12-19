@@ -9,10 +9,12 @@ build:
 	$(update)
 	docker buildx create --use --platform=linux/arm64/v8,linux/amd64 --name multi-platform-builder
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.3 --no-cache -t silarhi/php-apache:latest 8.3
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.3-frankenphp-alpine 8.3-frankenphp-alpine
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.3-frankenphp-bookworm 8.3-frankenphp-bookworm
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.3-symfony 8.3-symfony
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.2 8.2
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.2-ci 8.2-ci
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.2-frankenphp-alpine 8.2-frankenphp-alpine
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.2-frankenphp-bookworm 8.2-frankenphp-bookworm
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.2-symfony 8.2-symfony
 	docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache -t silarhi/php-apache:8.1 8.1
