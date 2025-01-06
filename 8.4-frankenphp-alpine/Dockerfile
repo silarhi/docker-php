@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1-php8.3-alpine
+FROM dunglas/frankenphp:1-php8.4-alpine
 
 EXPOSE 80
 WORKDIR /app
