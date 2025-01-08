@@ -1,7 +1,7 @@
 # Docker PHP Apache
 [![ci](https://github.com/silarhi/docker-php/actions/workflows/ci.yml/badge.svg)](https://github.com/silarhi/docker-php/actions/workflows/ci.yml)
 
-A Docker image for PHP apps based on Debian. Works with Apache and PHP from 5.6 to 8.0 and provide a Symfony variant.
+A Docker image for PHP apps based on Debian. Works with Apache and PHP from 5.6 to 8.4 and provide a Symfony variant.
 
 * Demo: https://labs.silarhi.fr/php
 * Demo (404): https://labs.silarhi.fr/php/notfound
