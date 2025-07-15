@@ -23,6 +23,6 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --link conf/php.ini $PHP_INI_DIR/conf.d/app.ini
 
 # Caddy
-COPY --link conf/Caddyfile /etc/caddy/Caddyfile
-COPY --link conf/symfony-worker.Caddyfile /etc/caddy/symfony-worker.Caddyfile
+COPY --link conf/Caddyfile /etc/frankenphp/Caddyfile
+COPY --link conf/symfony-worker.Caddyfile /etc/frankenphp/symfony-worker.Caddyfile
 COPY --link index.php /app/public/index.php
