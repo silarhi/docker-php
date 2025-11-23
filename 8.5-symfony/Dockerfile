@@ -8,6 +8,8 @@ WORKDIR /app
 HEALTHCHECK --interval=1m --timeout=3s --start-period=5s --start-interval=1s --retries=3 \
     CMD curl -f http://localhost/_health || exit 1
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN apt-get update -qq && \
     apt-get install -qy \
     git \
@@ -22,7 +24,7 @@ RUN apt-get update -qq && \
 
 # PHP Extensions
 RUN docker-php-ext-configure zip && \
-    docker-php-ext-install -j$(nproc) intl opcache pdo_mysql zip
+    docker-php-ext-install -j"$(nproc)" intl opcache pdo_mysql zip
 COPY --link conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache
