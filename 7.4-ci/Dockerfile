@@ -13,7 +13,8 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 # Install dependencies
 RUN apk add --no-cache \
     bash \
-    git
+    git \
+    icu
 
 # PHP Extensions
 COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
