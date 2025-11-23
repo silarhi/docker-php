@@ -3,5 +3,6 @@ ignored:
   - DL3008 # Pin versions in apt-get install
   - DL3018 # Pin versions in apk add
   - DL3015 # Avoid additional packages by specifying --no-install-recommends
+  - DL3007 # Pin versions for :latest tag (php-extension-installer is build-time only)
   # Multiple consecutive RUNs is acceptable for readability
   - DL3059 # Multiple consecutive RUN instructions

@@ -1,3 +1,4 @@
+FROM mlocati/php-extension-installer:latest AS php-extension-installer
 FROM php:7.2-apache-stretch
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -28,7 +29,8 @@ RUN apt-get update -qq && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /var/log/*
 
 # PHP Extensions
-RUN docker-php-ext-install -j"$(nproc)" opcache pdo_mysql
+COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions opcache pdo_mysql
 COPY --link conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache

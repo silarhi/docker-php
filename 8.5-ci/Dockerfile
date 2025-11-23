@@ -1,3 +1,4 @@
+FROM mlocati/php-extension-installer:latest AS php-extension-installer
 FROM php:8.5-alpine
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -12,33 +13,8 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 # Install dependencies
 RUN apk add --no-cache \
     bash \
-    icu \
-    libxml2 \
-    libzip \
-    git \
-    zlib && \
-    #Composer
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    git
 
 # PHP Extensions
-ENV PHPIZE_DEPS="\
-    autoconf \
-    cmake \
-    file \
-    freetype-dev \
-    g++ \
-    gcc \
-    icu-dev \
-    libc-dev \
-    libzip-dev \
-    make \
-    pcre-dev \
-    pkgconf \
-    re2c \
-    zlib-dev"
-
-RUN apk add --no-cache --virtual .build-deps \
-    $PHPIZE_DEPS && \
-    docker-php-ext-install -j"$(nproc)" intl opcache zip && \
-    apk del .build-deps && \
-    rm -rf /var/cache/apk/* /tmp/*
+COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions @composer intl opcache zip
