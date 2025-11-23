@@ -1,3 +1,4 @@
+FROM mlocati/php-extension-installer:latest AS php-extension-installer
 FROM php:8.4-apache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -20,7 +21,7 @@ RUN apt-get update -qq && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /var/log/*
 
 # PHP Extensions
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions intl opcache pdo_mysql zip
 COPY --link conf/php.ini /usr/local/etc/php/conf.d/app.ini
 

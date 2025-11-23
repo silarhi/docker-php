@@ -1,3 +1,4 @@
+FROM mlocati/php-extension-installer:latest AS php-extension-installer
 FROM php:8.4-alpine
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -15,5 +16,5 @@ RUN apk add --no-cache \
     git
 
 # PHP Extensions
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions @composer intl opcache zip
