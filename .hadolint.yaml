@@ -1,0 +1,7 @@
+ignored:
+  # Pinning package versions makes maintenance harder and is not critical for this use case
+  - DL3008 # Pin versions in apt-get install
+  - DL3018 # Pin versions in apk add
+  - DL3015 # Avoid additional packages by specifying --no-install-recommends
+  # Multiple consecutive RUNs is acceptable for readability
+  - DL3059 # Multiple consecutive RUN instructions
