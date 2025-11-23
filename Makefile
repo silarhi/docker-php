@@ -1,11 +1,22 @@
-.PHONY = all build publish update
+.PHONY = all build publish update generate validate
 DOCKER_BUILDER = docker buildx build --platform linux/arm64/v8,linux/amd64
 DOCKER_BUILD_AND_PUSH = $(DOCKER_BUILDER) --push --pull
 
 all: build
 
-update:
-	./update.sh
+# Validate configuration YAML
+validate:
+	@echo "Validating configuration..."
+	@python3 templates/validate_config.py
+
+# Generate Dockerfiles from templates
+generate: validate
+	@echo "Generating Dockerfiles from templates..."
+	@cd templates && python3 generate.py
+	@echo "✓ Dockerfiles generated successfully"
+
+# Legacy update script (deprecated, use 'make generate' instead)
+update: generate
 
 build: update
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.5 -t silarhi/php-apache:latest 8.5

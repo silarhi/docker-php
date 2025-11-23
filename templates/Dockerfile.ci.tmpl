@@ -1,0 +1,17 @@
+FROM {{ baseImage }}
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+WORKDIR /app
+
+HEALTHCHECK --interval=1m --timeout=3s --start-period=5s --start-interval=1s --retries=3 \
+    CMD {{ healthCheck }}
+
+# Install dependencies
+RUN apk add --no-cache \
+{% for pkg in packages %}    {{ pkg }} {{ "\\" if not loop.last else "&& \\" }}
+{% endfor %}    #Composer
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# PHP Extensions
+RUN install-php-extensions{% for ext in phpExts %} {{ ext }}{% endfor %}

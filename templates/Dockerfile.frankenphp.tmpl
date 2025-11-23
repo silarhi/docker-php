@@ -1,0 +1,32 @@
+FROM {{ baseImage }}
+
+EXPOSE 80
+WORKDIR /app
+
+HEALTHCHECK --interval=1m --timeout=3s --start-period=5s --start-interval=1s --retries=3 \
+    CMD {{ healthCheck }}
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV SERVER_NAME=:80
+
+# git, unzip & zip are for composer
+{% if packageManager == 'apk' %}RUN apk add --no-cache \
+{% for pkg in packages %}    {{ pkg }}{% if not loop.last %} \{% endif %}
+
+{% endfor %}
+{% else %}RUN apt-get update -qq && \
+    apt-get install -qy \
+{% for pkg in packages %}    {{ pkg }} {{ "\\" if not loop.last else "&& \\" }}
+{% endfor %}    apt-get clean && rm -rf /var/lib/apt/lists/* /var/log/*
+{% endif %}
+
+# PHP Extensions
+RUN install-php-extensions{% for ext in phpExts %} {{ ext }}{% endfor %}
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+COPY --link conf/php.ini $PHP_INI_DIR/conf.d/app.ini
+
+# Caddy
+COPY --link conf/Caddyfile /etc/frankenphp/Caddyfile
+COPY --link conf/symfony-worker.Caddyfile /etc/frankenphp/symfony-worker.Caddyfile
+COPY --link index.php /app/public/index.php

@@ -12,9 +12,15 @@ ENV SERVER_NAME=:80
 # git, unzip & zip are for composer
 RUN apk add --no-cache \
     git \
+
     gnupg \
+
     unzip \
+
     zip
+
+
+
 
 # PHP Extensions
 RUN install-php-extensions @composer opcache pdo_mysql

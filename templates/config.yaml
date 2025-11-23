@@ -1,0 +1,253 @@
+# PHP Docker Images Configuration
+# Defines all variants and PHP versions with their settings
+
+# Variant definitions - reusable configurations for different image types
+variants:
+  base:
+    type: base
+    base_image: "php:{version}-apache"
+    packages:
+      - git
+      - gnupg
+      - unzip
+      - zip
+    php_exts:
+      - opcache
+      - pdo_mysql
+    server: apache
+    package_manager: apt
+    health_check: "curl -f http://localhost/_health || exit 1"
+
+  symfony:
+    type: symfony
+    base_image: "php:{version}-apache"
+    packages:
+      - git
+      - gnupg
+      - libicu-dev
+      - libzip-dev
+      - unzip
+      - zip
+      - zlib1g-dev
+    php_exts:
+      - intl
+      - opcache
+      - pdo_mysql
+      - zip
+    server: apache
+    package_manager: apt
+    health_check: "curl -f http://localhost/_health || exit 1"
+
+  ci:
+    type: ci
+    base_image: "php:{version}-alpine"
+    packages:
+      - bash
+      - icu
+      - libxml2
+      - libzip
+      - git
+      - zlib
+    php_exts:
+      - intl
+      - opcache
+      - zip
+    server: none
+    package_manager: apk
+    health_check: "curl -f http://localhost/_health || exit 1"
+
+  frankenphp-alpine:
+    type: frankenphp-alpine
+    base_image: "dunglas/frankenphp:1-php{version}-alpine"
+    packages:
+      - git
+      - gnupg
+      - unzip
+      - zip
+    php_exts:
+      - "@composer"
+      - opcache
+      - pdo_mysql
+    server: frankenphp
+    package_manager: apk
+    health_check: "curl -f http://localhost:2019/metrics || exit 1"
+
+  frankenphp-bookworm:
+    type: frankenphp-bookworm
+    base_image: "dunglas/frankenphp:1-php{version}-bookworm"
+    packages:
+      - git
+      - gnupg
+      - unzip
+      - zip
+    php_exts:
+      - "@composer"
+      - opcache
+      - pdo_mysql
+    server: frankenphp
+    package_manager: apt
+    health_check: "curl -f http://localhost:2019/metrics || exit 1"
+
+# PHP versions and their available variants
+php_versions:
+  - version: "5.6"
+    variants:
+      - base
+    legacy: true
+    debian_suffix: ""
+    needs_stretch_repo_update: false
+    # Legacy versions need extra packages
+    package_overrides:
+      base:
+        - git
+        - gnupg
+        - iputils-ping
+        - libicu-dev
+        - unzip
+        - zip
+
+  - version: "7.1"
+    variants:
+      - base
+      - symfony
+    legacy: true
+    debian_suffix: "-stretch"
+    needs_stretch_repo_update: true
+    package_overrides:
+      base:
+        - git
+        - gnupg
+        - iputils-ping
+        - libicu-dev
+        - unzip
+        - zip
+      symfony:
+        - git
+        - gnupg
+        - iputils-ping
+        - libicu-dev
+        - libzip-dev
+        - unzip
+        - zip
+        - zlib1g-dev
+
+  - version: "7.2"
+    variants:
+      - base
+      - symfony
+    legacy: true
+    debian_suffix: "-stretch"
+    needs_stretch_repo_update: true
+    package_overrides:
+      base:
+        - git
+        - gnupg
+        - iputils-ping
+        - libicu-dev
+        - unzip
+        - zip
+      symfony:
+        - git
+        - gnupg
+        - iputils-ping
+        - libicu-dev
+        - libzip-dev
+        - unzip
+        - zip
+        - zlib1g-dev
+
+  - version: "7.3"
+    variants:
+      - base
+      - symfony
+    legacy: true
+    debian_suffix: "-stretch"
+    needs_stretch_repo_update: true
+    package_overrides:
+      base:
+        - git
+        - gnupg
+        - iputils-ping
+        - libicu-dev
+        - unzip
+        - zip
+      symfony:
+        - git
+        - gnupg
+        - iputils-ping
+        - libicu-dev
+        - libzip-dev
+        - unzip
+        - zip
+        - zlib1g-dev
+
+  - version: "7.4"
+    variants:
+      - base
+      - symfony
+      - ci
+    legacy: true
+    debian_suffix: ""
+    needs_stretch_repo_update: false
+
+  - version: "8.0"
+    variants:
+      - base
+      - symfony
+      - ci
+    legacy: true
+    debian_suffix: ""
+    needs_stretch_repo_update: false
+
+  - version: "8.1"
+    variants:
+      - base
+      - symfony
+      - ci
+    legacy: false
+    debian_suffix: ""
+    needs_stretch_repo_update: false
+
+  - version: "8.2"
+    variants:
+      - base
+      - symfony
+      - ci
+      - frankenphp-alpine
+      - frankenphp-bookworm
+    legacy: false
+    debian_suffix: ""
+    needs_stretch_repo_update: false
+
+  - version: "8.3"
+    variants:
+      - base
+      - symfony
+      - ci
+      - frankenphp-alpine
+      - frankenphp-bookworm
+    legacy: false
+    debian_suffix: ""
+    needs_stretch_repo_update: false
+
+  - version: "8.4"
+    variants:
+      - base
+      - symfony
+      - ci
+      - frankenphp-alpine
+      - frankenphp-bookworm
+    legacy: false
+    debian_suffix: ""
+    needs_stretch_repo_update: false
+
+  - version: "8.5"
+    variants:
+      - base
+      - symfony
+      - ci
+      - frankenphp-alpine
+      - frankenphp-bookworm
+    legacy: false
+    debian_suffix: ""
+    needs_stretch_repo_update: false
