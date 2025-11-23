@@ -23,6 +23,7 @@ RUN apt-get update -qq && \
 # PHP Extensions
 RUN docker-php-ext-configure zip && \
     docker-php-ext-install -j$(nproc) intl opcache pdo_mysql zip
+
 COPY --link conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache
