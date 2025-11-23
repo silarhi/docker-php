@@ -1,0 +1,102 @@
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#error-box {
+    position: relative;
+    max-width: 560px;
+    width: 100%;
+    padding-left: 160px;
+    line-height: 1.1;
+}
+
+#error-box #error-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 140px;
+    height: 140px;
+    background-image: url('/_errors/img/emoji.png');
+    background-size: cover;
+}
+
+#error-box #error-image:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: scale(2.4);
+    border-radius: 50%;
+    background-color: #f2f5f8;
+    z-index: -1;
+}
+
+#error-box h1 {
+    font-size: 65px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #151723;
+    text-transform: uppercase;
+}
+
+#error-box h2 {
+    font-size: 21px;
+    font-weight: 400;
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    color: #151723;
+}
+
+#error-box p {
+    color: #999fa5;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+#error-box a {
+    font-weight: 500;
+    text-decoration: none;
+    color: #388dbc;
+}
+
+@media only screen and (max-width: 767px) {
+    #error-box #error-image {
+        width: 110px;
+        height: 110px;
+    }
+
+    #error-box {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 110px;
+    }
+}

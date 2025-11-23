@@ -10,8 +10,8 @@ HEALTHCHECK --interval=1m --timeout=3s --start-period=5s --start-interval=1s --r
 # Install dependencies
 RUN apk add --no-cache \
     bash \
-    libxml2 \
     icu \
+    libxml2 \
     libzip \
     git \
     zlib && \
