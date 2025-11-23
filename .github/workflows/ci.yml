@@ -21,6 +21,7 @@ jobs:
           dockerfile: "*/Dockerfile"
           recursive: true
           failure-threshold: warning
+          hadolint-version: 2.14.0
 
   docker:
     runs-on: ubuntu-latest
