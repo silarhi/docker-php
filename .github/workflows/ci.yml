@@ -9,92 +9,87 @@ on:
     - cron: 0 0 * * 0
 
 jobs:
-  detect-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v45
-        with:
-          dir_names: true
-          dir_names_max_depth: 1
-          json: true
-
-      - name: Set matrix for changed paths
-        id: set-matrix
-        run: |
-          # Full matrix for push to main or scheduled runs
-          FULL_MATRIX='[
-            {"path":"8.5","tags":"silarhi/php-apache:latest\nsilarhi/php-apache:8.5"},
-            {"path":"8.5-ci","tags":"silarhi/php-apache:8.5-ci"},
-            {"path":"8.5-frankenphp-alpine","tags":"silarhi/php-apache:8.5-frankenphp-alpine"},
-            {"path":"8.5-frankenphp-bookworm","tags":"silarhi/php-apache:8.5-frankenphp-bookworm"},
-            {"path":"8.5-symfony","tags":"silarhi/php-apache:8.5-symfony"},
-            {"path":"8.4","tags":"silarhi/php-apache:8.4"},
-            {"path":"8.4-ci","tags":"silarhi/php-apache:8.4-ci"},
-            {"path":"8.4-frankenphp-alpine","tags":"silarhi/php-apache:8.4-frankenphp-alpine"},
-            {"path":"8.4-frankenphp-bookworm","tags":"silarhi/php-apache:8.4-frankenphp-bookworm"},
-            {"path":"8.4-symfony","tags":"silarhi/php-apache:8.4-symfony"},
-            {"path":"8.3","tags":"silarhi/php-apache:8.3"},
-            {"path":"8.3-ci","tags":"silarhi/php-apache:8.3-ci"},
-            {"path":"8.3-frankenphp-alpine","tags":"silarhi/php-apache:8.3-frankenphp-alpine"},
-            {"path":"8.3-frankenphp-bookworm","tags":"silarhi/php-apache:8.3-frankenphp-bookworm"},
-            {"path":"8.3-symfony","tags":"silarhi/php-apache:8.3-symfony"},
-            {"path":"8.2","tags":"silarhi/php-apache:8.2"},
-            {"path":"8.2-ci","tags":"silarhi/php-apache:8.2-ci"},
-            {"path":"8.2-frankenphp-alpine","tags":"silarhi/php-apache:8.2-frankenphp-alpine"},
-            {"path":"8.2-frankenphp-bookworm","tags":"silarhi/php-apache:8.2-frankenphp-bookworm"},
-            {"path":"8.2-symfony","tags":"silarhi/php-apache:8.2-symfony"},
-            {"path":"8.1","tags":"silarhi/php-apache:8.1"},
-            {"path":"8.1-ci","tags":"silarhi/php-apache:8.1-ci"},
-            {"path":"8.1-symfony","tags":"silarhi/php-apache:8.1-symfony"}
-          ]'
-
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            CHANGED_DIRS='${{ steps.changed-files.outputs.all_changed_files }}'
-            echo "Changed directories: $CHANGED_DIRS"
-
-            # Filter matrix to only include changed paths
-            FILTERED_MATRIX=$(echo "$FULL_MATRIX" | jq -c --argjson changed "$CHANGED_DIRS" '
-              map(select(.path as $p | $changed | index($p)))
-            ')
-
-            echo "Filtered matrix: $FILTERED_MATRIX"
-
-            if [[ "$FILTERED_MATRIX" == "[]" ]]; then
-              echo "No Docker image paths changed"
-              echo "matrix={\"include\":[]}" >> $GITHUB_OUTPUT
-            else
-              echo "matrix={\"include\":$FILTERED_MATRIX}" >> $GITHUB_OUTPUT
-            fi
-          else
-            # For push to main or scheduled runs, build all images
-            echo "matrix={\"include\":$FULL_MATRIX}" >> $GITHUB_OUTPUT
-          fi
-
   docker:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.matrix != '{"include":[]}'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
+      matrix:
+        include:
+          # PHP 8.5 (latest)
+          - path: "8.5"
+            tags: |
+              silarhi/php-apache:latest
+              silarhi/php-apache:8.5
+          - path: "8.5-ci"
+            tags: silarhi/php-apache:8.5-ci
+          - path: "8.5-frankenphp-alpine"
+            tags: silarhi/php-apache:8.5-frankenphp-alpine
+          - path: "8.5-frankenphp-bookworm"
+            tags: silarhi/php-apache:8.5-frankenphp-bookworm
+          - path: "8.5-symfony"
+            tags: silarhi/php-apache:8.5-symfony
+
+          # PHP 8.4
+          - path: "8.4"
+            tags: silarhi/php-apache:8.4
+          - path: "8.4-ci"
+            tags: silarhi/php-apache:8.4-ci
+          - path: "8.4-frankenphp-alpine"
+            tags: silarhi/php-apache:8.4-frankenphp-alpine
+          - path: "8.4-frankenphp-bookworm"
+            tags: silarhi/php-apache:8.4-frankenphp-bookworm
+          - path: "8.4-symfony"
+            tags: silarhi/php-apache:8.4-symfony
+
+          # PHP 8.3
+          - path: "8.3"
+            tags: silarhi/php-apache:8.3
+          - path: "8.3-ci"
+            tags: silarhi/php-apache:8.3-ci
+          - path: "8.3-frankenphp-alpine"
+            tags: silarhi/php-apache:8.3-frankenphp-alpine
+          - path: "8.3-frankenphp-bookworm"
+            tags: silarhi/php-apache:8.3-frankenphp-bookworm
+          - path: "8.3-symfony"
+            tags: silarhi/php-apache:8.3-symfony
+
+          # PHP 8.2
+          - path: "8.2"
+            tags: silarhi/php-apache:8.2
+          - path: "8.2-ci"
+            tags: silarhi/php-apache:8.2-ci
+          - path: "8.2-frankenphp-alpine"
+            tags: silarhi/php-apache:8.2-frankenphp-alpine
+          - path: "8.2-frankenphp-bookworm"
+            tags: silarhi/php-apache:8.2-frankenphp-bookworm
+          - path: "8.2-symfony"
+            tags: silarhi/php-apache:8.2-symfony
+
+          # PHP 8.1
+          - path: "8.1"
+            tags: silarhi/php-apache:8.1
+          - path: "8.1-ci"
+            tags: silarhi/php-apache:8.1-ci
+          - path: "8.1-symfony"
+            tags: silarhi/php-apache:8.1-symfony
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Check if path changed
+        if: github.event_name == 'pull_request'
+        id: changed
+        uses: tj-actions/changed-files@v45
+        with:
+          files: ${{ matrix.path }}/**
+
       - name: Set up QEMU
+        if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
+        if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
         uses: docker/setup-buildx-action@v3
 
       - name: Login to DockerHub
@@ -105,6 +100,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
+        if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
         uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.path }}
