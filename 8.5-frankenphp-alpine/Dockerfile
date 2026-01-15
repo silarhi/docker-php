@@ -27,4 +27,5 @@ COPY --link conf/php.ini $PHP_INI_DIR/conf.d/app.ini
 # Caddy
 COPY --link conf/Caddyfile /etc/frankenphp/Caddyfile
 COPY --link conf/symfony-worker.Caddyfile /etc/frankenphp/symfony-worker.Caddyfile
+COPY --link conf/symfony-worker-native.Caddyfile /etc/frankenphp/symfony-worker-native.Caddyfile
 COPY --link index.php /app/public/index.php

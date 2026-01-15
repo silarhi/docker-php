@@ -1,4 +1,5 @@
 worker {
 	file /app/public/index.php
+    # LEGACY RUNTIME SUPPORT - Switch to the built-in Symfony runtime by commenting the line below
 	env APP_RUNTIME Runtime\FrankenPhpSymfony\Runtime
 }

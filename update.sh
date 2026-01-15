@@ -16,7 +16,7 @@ for version in *; do
 	fi
 
 	if [[ "$version" != *"-frankenphp"* ]]; then
-    rm "$version/conf/Caddyfile" "$version/conf/symfony-worker.Caddyfile"
+    rm "$version/conf/Caddyfile" "$version/conf/symfony-worker.Caddyfile" "$version/conf/symfony-worker-native.Caddyfile"
   else
     rm "$version/conf/apache.conf" "$version/conf/vhost.conf"
     rm -rf "$version/errors"
