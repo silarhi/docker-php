@@ -1,5 +1,5 @@
 FROM mlocati/php-extension-installer:latest AS php-extension-installer
-FROM php:8.2-alpine
+FROM php:8.3-alpine
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
