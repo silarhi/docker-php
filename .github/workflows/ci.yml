@@ -124,7 +124,7 @@ jobs:
 
       - name: Build and push
         if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ${{ matrix.path }}
           platforms: linux/amd64,linux/arm64
