@@ -18,7 +18,7 @@ jobs:
       - name: Run Hadolint
         uses: hadolint/hadolint-action@v3.3.0
         with:
-          dockerfile: "*/Dockerfile.hadolint"
+          dockerfile: "*/Dockerfile"
           recursive: true
           failure-threshold: warning
 
