@@ -7,7 +7,7 @@ EXPOSE 80
 WORKDIR /app
 
 HEALTHCHECK --interval=1m --timeout=3s --start-period=5s --start-interval=1s --retries=3 \
-    CMD curl -f http://localhost/_health || exit 1
+    CMD ["/bin/sh", "-c", "curl -f http://localhost/_health || exit 1"]
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
