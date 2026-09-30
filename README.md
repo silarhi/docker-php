@@ -1,5 +1,5 @@
 # Docker PHP Apache
-[![ci](https://github.com/silarhi/docker-php/actions/workflows/ci.yml/badge.svg)](https://github.com/silarhi/docker-php/actions/workflows/ci.yml)
+[![Continuous Integration](https://github.com/silarhi/docker-php/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/silarhi/docker-php/actions/workflows/continuous-integration.yml)
 
 A Docker image for PHP apps based on Debian. Works with Apache and PHP from 5.6 to 8.5 and provide a Symfony variant.
 
