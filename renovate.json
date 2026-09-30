@@ -5,7 +5,7 @@
   ],
   "platformAutomerge": true,
   "automergeType": "pr",
-  "stabilityDays": 3,
+  "minimumReleaseAge": "3 days",
   "packageRules": [
       {
           "matchUpdateTypes": ["minor", "patch", "digest"],
