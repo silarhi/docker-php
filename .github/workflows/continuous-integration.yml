@@ -1,0 +1,121 @@
+name: 'Continuous Integration'
+
+on:
+    pull_request:
+    push:
+        branches:
+            - 'main'
+    schedule:
+        - cron: '0 0 * * 0'
+
+jobs:
+    lint:
+        name: Lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+            - name: Hadolint
+              uses: hadolint/hadolint-action@v3.5.0
+              with:
+                  dockerfile: '*/Dockerfile'
+                  recursive: true
+                  failure-threshold: warning
+
+    build:
+        name: Build (${{ matrix.path }})
+        needs: [lint]
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                  - path: '8.5'
+                    tags: |
+                        silarhi/php-apache:latest
+                        silarhi/php-apache:8.5
+                  - path: '8.5-ci'
+                    tags: silarhi/php-apache:8.5-ci
+                  - path: '8.5-frankenphp-alpine'
+                    tags: silarhi/php-apache:8.5-frankenphp-alpine
+                  - path: '8.5-frankenphp-bookworm'
+                    tags: silarhi/php-apache:8.5-frankenphp-bookworm
+                  - path: '8.5-symfony'
+                    tags: silarhi/php-apache:8.5-symfony
+                  - path: '8.4'
+                    tags: silarhi/php-apache:8.4
+                  - path: '8.4-ci'
+                    tags: silarhi/php-apache:8.4-ci
+                  - path: '8.4-frankenphp-alpine'
+                    tags: silarhi/php-apache:8.4-frankenphp-alpine
+                  - path: '8.4-frankenphp-bookworm'
+                    tags: silarhi/php-apache:8.4-frankenphp-bookworm
+                  - path: '8.4-symfony'
+                    tags: silarhi/php-apache:8.4-symfony
+                  - path: '8.3'
+                    tags: silarhi/php-apache:8.3
+                  - path: '8.3-ci'
+                    tags: silarhi/php-apache:8.3-ci
+                  - path: '8.3-frankenphp-alpine'
+                    tags: silarhi/php-apache:8.3-frankenphp-alpine
+                  - path: '8.3-frankenphp-bookworm'
+                    tags: silarhi/php-apache:8.3-frankenphp-bookworm
+                  - path: '8.3-symfony'
+                    tags: silarhi/php-apache:8.3-symfony
+                  - path: '8.2'
+                    tags: silarhi/php-apache:8.2
+                  - path: '8.2-ci'
+                    tags: silarhi/php-apache:8.2-ci
+                  - path: '8.2-frankenphp-alpine'
+                    tags: silarhi/php-apache:8.2-frankenphp-alpine
+                  - path: '8.2-frankenphp-bookworm'
+                    tags: silarhi/php-apache:8.2-frankenphp-bookworm
+                  - path: '8.2-symfony'
+                    tags: silarhi/php-apache:8.2-symfony
+                  - path: '8.1'
+                    tags: silarhi/php-apache:8.1
+                  - path: '8.1-ci'
+                    tags: silarhi/php-apache:8.1-ci
+                  - path: '8.1-symfony'
+                    tags: silarhi/php-apache:8.1-symfony
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+            - name: Check if path changed
+              if: github.event_name == 'pull_request'
+              id: changed
+              uses: tj-actions/changed-files@v47
+              with:
+                  files: ${{ matrix.path }}/**
+            - name: Set up QEMU
+              if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
+              uses: docker/setup-qemu-action@v4
+            - name: Set up Docker Buildx
+              if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
+              uses: docker/setup-buildx-action@v4
+            - name: Login to Docker Hub
+              if: github.event_name != 'pull_request'
+              uses: docker/login-action@v4
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Build and push
+              if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
+              uses: docker/build-push-action@v7
+              with:
+                  context: ${{ matrix.path }}
+                  platforms: linux/amd64,linux/arm64
+                  tags: ${{ matrix.tags }}
+                  push: ${{ github.event_name != 'pull_request' }}
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max
+
+    ci-passed:
+        name: CI passed
+        needs: [lint, build]
+        if: always()
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check that all required jobs succeeded
+              if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+              run: exit 1
