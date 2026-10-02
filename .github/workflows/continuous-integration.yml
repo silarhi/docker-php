@@ -8,10 +8,19 @@ on:
     schedule:
         - cron: '0 0 * * 0'
 
+permissions:
+    contents: read
+
+# Supersede outdated runs of a pull request; push runs (head_ref empty) are never cancelled.
+concurrency:
+    group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+    cancel-in-progress: true
+
 jobs:
     lint:
         name: Lint
         runs-on: ubuntu-latest
+        timeout-minutes: 15
         steps:
             - name: Checkout
               uses: actions/checkout@v7
@@ -26,6 +35,7 @@ jobs:
         name: Build (${{ matrix.path }})
         needs: [lint]
         runs-on: ubuntu-latest
+        timeout-minutes: 90
         strategy:
             fail-fast: false
             matrix:
@@ -81,12 +91,21 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v7
+              with:
+                  # HEAD is the PR merge commit and HEAD^1 the base branch tip, so
+                  # `git diff HEAD^1 HEAD` is exactly what the PR changes.
+                  fetch-depth: 2
             - name: Check if path changed
               if: github.event_name == 'pull_request'
               id: changed
-              uses: tj-actions/changed-files@v47
-              with:
-                  files: ${{ matrix.path }}/**
+              env:
+                  MATRIX_PATH: ${{ matrix.path }}
+              run: |
+                  if git diff --quiet HEAD^1 HEAD -- "$MATRIX_PATH/"; then
+                      echo "any_changed=false" >> "$GITHUB_OUTPUT"
+                  else
+                      echo "any_changed=true" >> "$GITHUB_OUTPUT"
+                  fi
             - name: Set up QEMU
               if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
               uses: docker/setup-qemu-action@v4
@@ -115,6 +134,7 @@ jobs:
         needs: [lint, build]
         if: always()
         runs-on: ubuntu-latest
+        timeout-minutes: 5
         steps:
             - name: Check that all required jobs succeeded
               if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
