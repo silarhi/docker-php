@@ -84,12 +84,21 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v7
+              with:
+                  # HEAD is the PR merge commit and HEAD^1 the base branch tip, so
+                  # `git diff HEAD^1 HEAD` is exactly what the PR changes.
+                  fetch-depth: 2
             - name: Check if path changed
               if: github.event_name == 'pull_request'
               id: changed
-              uses: tj-actions/changed-files@v47
-              with:
-                  files: ${{ matrix.path }}/**
+              env:
+                  MATRIX_PATH: ${{ matrix.path }}
+              run: |
+                  if git diff --quiet HEAD^1 HEAD -- "$MATRIX_PATH/"; then
+                      echo "any_changed=false" >> "$GITHUB_OUTPUT"
+                  else
+                      echo "any_changed=true" >> "$GITHUB_OUTPUT"
+                  fi
             - name: Set up QEMU
               if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
               uses: docker/setup-qemu-action@v4
