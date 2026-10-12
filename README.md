@@ -68,3 +68,11 @@ These tags were last pushed on 2024-12-19. They are not part of the CI matrix an
 - **Symfony (`X.Y-symfony`)**: Enhanced images with additional extensions for Symfony applications (intl, zip)
 - **FrankenPHP Alpine (`X.Y-frankenphp-alpine`)**: Alpine-based images using FrankenPHP server for modern PHP apps
 - **FrankenPHP Bookworm (`X.Y-frankenphp-bookworm`)**: Debian-based images using FrankenPHP server for modern PHP apps
+
+## Configuration
+
+PHP settings of the Apache and FrankenPHP images live in `conf/php.ini` (installed as `conf.d/app.ini`).
+
+| Environment variable | Default | Effect |
+|----------------------|---------|--------|
+| `PHP_OPCACHE_VALIDATE_TIMESTAMPS` | `0` | `opcache.validate_timestamps`. With `0`, PHP files are compiled once and never checked for changes: restart the container to deploy new code. Set it to `1` when the sources are mounted and edited in place (local development). |

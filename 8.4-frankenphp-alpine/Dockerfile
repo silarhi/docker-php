@@ -9,6 +9,7 @@ HEALTHCHECK --interval=1m --timeout=3s --start-period=5s --start-interval=1s --r
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0
 ENV SERVER_NAME=:80
 
 # git, unzip & zip are for composer
