@@ -23,7 +23,23 @@
 	root /app/public
 	encode zstd br gzip 
 
+	# Like mod_remoteip in the Apache images: PHP gets the visitor IP resolved through
+	# trusted_proxies as REMOTE_ADDR, and HTTPS=on when a proxy received the request over HTTPS.
+	map {http.request.header.X-Forwarded-Proto} {forwarded_https} {
+		https on
+		default ""
+	}
+	map {http.request.scheme} {php_https} {
+		https on
+		default {forwarded_https}
+	}
+	# Already resolved into REMOTE_ADDR: don't let PHP walk the proxy chain a second time.
+	request_header -X-Forwarded-For
+
 	{$CADDY_SERVER_EXTRA_DIRECTIVES}
 
-	php_server
+	php_server {
+		env REMOTE_ADDR {client_ip}
+		env HTTPS {php_https}
+	}
 }
