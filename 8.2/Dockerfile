@@ -2,6 +2,7 @@ FROM mlocati/php-extension-installer:latest AS php-extension-installer
 FROM php:8.2-apache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0
 
 EXPOSE 80
 WORKDIR /app
