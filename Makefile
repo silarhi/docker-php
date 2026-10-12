@@ -8,6 +8,9 @@ update:
 	./update.sh
 
 build: update
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.6 8.6
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.6-ci 8.6-ci
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.6-symfony 8.6-symfony
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.5 -t silarhi/php-apache:latest 8.5
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.5-ci 8.5-ci
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.5-frankenphp-alpine 8.5-frankenphp-alpine

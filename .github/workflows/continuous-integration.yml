@@ -40,6 +40,12 @@ jobs:
             fail-fast: false
             matrix:
                 include:
+                  - path: '8.6'
+                    tags: silarhi/php-apache:8.6
+                  - path: '8.6-ci'
+                    tags: silarhi/php-apache:8.6-ci
+                  - path: '8.6-symfony'
+                    tags: silarhi/php-apache:8.6-symfony
                   - path: '8.5'
                     tags: |
                         silarhi/php-apache:latest

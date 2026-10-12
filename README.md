@@ -1,8 +1,9 @@
 # Docker PHP
 [![Continuous Integration](https://github.com/silarhi/docker-php/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/silarhi/docker-php/actions/workflows/continuous-integration.yml)
 
-Docker images for PHP 8.1 to 8.5 apps: Apache (Debian, with a Symfony variant), FrankenPHP (Debian or Alpine) and CI
-(Alpine). Legacy images for PHP 5.6 to 8.0 are still available but are no longer rebuilt automatically.
+Docker images for PHP 8.1 to 8.6 apps: Apache (Debian, with a Symfony variant), FrankenPHP (Debian or Alpine) and CI
+(Alpine). PHP 8.6 images are built from the upstream release candidate until 8.6.0 is released. Legacy images for PHP
+5.6 to 8.0 are still available but are no longer rebuilt automatically.
 
 * GitHub: https://github.com/silarhi/docker-php
 * Demo: https://labs.silarhi.fr/php
@@ -16,6 +17,9 @@ Docker images for PHP 8.1 to 8.5 apps: Apache (Debian, with a Symfony variant), 
 
 | PHP Version | Tag | Base OS | Web Server | Public Folder | Size | Usage |
 |-------------|-----|---------|------------|---------------|------|-------|
+| 8.6 (RC) | `8.6` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.6) | Preview (release candidate) |
+| 8.6 (RC) | `8.6-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.6-ci) | CI/CD pipelines (preview) |
+| 8.6 (RC) | `8.6-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.6-symfony) | Symfony apps (preview) |
 | 8.5 (latest) | `latest`, `8.5` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5) | Production |
 | 8.5 | `8.5-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-ci) | CI/CD pipelines |
 | 8.5 | `8.5-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-symfony) | Symfony apps |
