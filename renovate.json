@@ -17,7 +17,7 @@
       },
       {
           "matchManagers": ["dockerfile"],
-          "matchUpdateTypes": ["minor"],
+          "matchUpdateTypes": ["major", "minor"],
           "enabled": false
       }
   ]
