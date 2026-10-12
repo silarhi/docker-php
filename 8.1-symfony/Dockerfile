@@ -18,7 +18,7 @@ RUN apt-get update -qq && \
     unzip \
     zip && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /var/log/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # PHP Extensions
 COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
