@@ -24,7 +24,8 @@ RUN apt-get update -qq && \
 # PHP Extensions
 COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions opcache pdo_mysql
-COPY --link conf/php.ini /usr/local/etc/php/conf.d/app.ini
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+COPY --link conf/php.ini $PHP_INI_DIR/conf.d/app.ini
 
 # Apache
 COPY --link errors /errors
