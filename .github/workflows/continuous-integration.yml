@@ -32,62 +32,64 @@ jobs:
                   failure-threshold: warning
 
     build:
-        name: Build (${{ matrix.path }})
+        name: Build (${{ matrix.image.path }}, ${{ matrix.arch }})
         needs: [lint]
-        runs-on: ubuntu-latest
-        timeout-minutes: 90
+        # Native runner per architecture: arm64 under QEMU was ~13x slower than amd64.
+        runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+        timeout-minutes: 30
         strategy:
             fail-fast: false
             matrix:
-                include:
-                  - path: '8.5'
-                    tags: |
-                        silarhi/php-apache:latest
-                        silarhi/php-apache:8.5
-                  - path: '8.5-ci'
-                    tags: silarhi/php-apache:8.5-ci
-                  - path: '8.5-frankenphp-alpine'
-                    tags: silarhi/php-apache:8.5-frankenphp-alpine
-                  - path: '8.5-frankenphp-bookworm'
-                    tags: silarhi/php-apache:8.5-frankenphp-bookworm
-                  - path: '8.5-symfony'
-                    tags: silarhi/php-apache:8.5-symfony
-                  - path: '8.4'
-                    tags: silarhi/php-apache:8.4
-                  - path: '8.4-ci'
-                    tags: silarhi/php-apache:8.4-ci
-                  - path: '8.4-frankenphp-alpine'
-                    tags: silarhi/php-apache:8.4-frankenphp-alpine
-                  - path: '8.4-frankenphp-bookworm'
-                    tags: silarhi/php-apache:8.4-frankenphp-bookworm
-                  - path: '8.4-symfony'
-                    tags: silarhi/php-apache:8.4-symfony
-                  - path: '8.3'
-                    tags: silarhi/php-apache:8.3
-                  - path: '8.3-ci'
-                    tags: silarhi/php-apache:8.3-ci
-                  - path: '8.3-frankenphp-alpine'
-                    tags: silarhi/php-apache:8.3-frankenphp-alpine
-                  - path: '8.3-frankenphp-bookworm'
-                    tags: silarhi/php-apache:8.3-frankenphp-bookworm
-                  - path: '8.3-symfony'
-                    tags: silarhi/php-apache:8.3-symfony
-                  - path: '8.2'
-                    tags: silarhi/php-apache:8.2
-                  - path: '8.2-ci'
-                    tags: silarhi/php-apache:8.2-ci
-                  - path: '8.2-frankenphp-alpine'
-                    tags: silarhi/php-apache:8.2-frankenphp-alpine
-                  - path: '8.2-frankenphp-bookworm'
-                    tags: silarhi/php-apache:8.2-frankenphp-bookworm
-                  - path: '8.2-symfony'
-                    tags: silarhi/php-apache:8.2-symfony
-                  - path: '8.1'
-                    tags: silarhi/php-apache:8.1
-                  - path: '8.1-ci'
-                    tags: silarhi/php-apache:8.1-ci
-                  - path: '8.1-symfony'
-                    tags: silarhi/php-apache:8.1-symfony
+                arch: [amd64, arm64]
+                image: &images
+                    - path: '8.5'
+                      tags: |
+                          silarhi/php-apache:latest
+                          silarhi/php-apache:8.5
+                    - path: '8.5-ci'
+                      tags: silarhi/php-apache:8.5-ci
+                    - path: '8.5-frankenphp-alpine'
+                      tags: silarhi/php-apache:8.5-frankenphp-alpine
+                    - path: '8.5-frankenphp-bookworm'
+                      tags: silarhi/php-apache:8.5-frankenphp-bookworm
+                    - path: '8.5-symfony'
+                      tags: silarhi/php-apache:8.5-symfony
+                    - path: '8.4'
+                      tags: silarhi/php-apache:8.4
+                    - path: '8.4-ci'
+                      tags: silarhi/php-apache:8.4-ci
+                    - path: '8.4-frankenphp-alpine'
+                      tags: silarhi/php-apache:8.4-frankenphp-alpine
+                    - path: '8.4-frankenphp-bookworm'
+                      tags: silarhi/php-apache:8.4-frankenphp-bookworm
+                    - path: '8.4-symfony'
+                      tags: silarhi/php-apache:8.4-symfony
+                    - path: '8.3'
+                      tags: silarhi/php-apache:8.3
+                    - path: '8.3-ci'
+                      tags: silarhi/php-apache:8.3-ci
+                    - path: '8.3-frankenphp-alpine'
+                      tags: silarhi/php-apache:8.3-frankenphp-alpine
+                    - path: '8.3-frankenphp-bookworm'
+                      tags: silarhi/php-apache:8.3-frankenphp-bookworm
+                    - path: '8.3-symfony'
+                      tags: silarhi/php-apache:8.3-symfony
+                    - path: '8.2'
+                      tags: silarhi/php-apache:8.2
+                    - path: '8.2-ci'
+                      tags: silarhi/php-apache:8.2-ci
+                    - path: '8.2-frankenphp-alpine'
+                      tags: silarhi/php-apache:8.2-frankenphp-alpine
+                    - path: '8.2-frankenphp-bookworm'
+                      tags: silarhi/php-apache:8.2-frankenphp-bookworm
+                    - path: '8.2-symfony'
+                      tags: silarhi/php-apache:8.2-symfony
+                    - path: '8.1'
+                      tags: silarhi/php-apache:8.1
+                    - path: '8.1-ci'
+                      tags: silarhi/php-apache:8.1-ci
+                    - path: '8.1-symfony'
+                      tags: silarhi/php-apache:8.1-symfony
         steps:
             - name: Checkout
               uses: actions/checkout@v7
@@ -99,16 +101,14 @@ jobs:
               if: github.event_name == 'pull_request'
               id: changed
               env:
-                  MATRIX_PATH: ${{ matrix.path }}
+                  MATRIX_PATH: ${{ matrix.image.path }}
               run: |
-                  if git diff --quiet HEAD^1 HEAD -- "$MATRIX_PATH/"; then
+                  # A workflow change rebuilds every image, so it is tested before it reaches main.
+                  if git diff --quiet HEAD^1 HEAD -- "$MATRIX_PATH/" .github/workflows/continuous-integration.yml; then
                       echo "any_changed=false" >> "$GITHUB_OUTPUT"
                   else
                       echo "any_changed=true" >> "$GITHUB_OUTPUT"
                   fi
-            - name: Set up QEMU
-              if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
-              uses: docker/setup-qemu-action@v4
             - name: Set up Docker Buildx
               if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
               uses: docker/setup-buildx-action@v4
@@ -118,20 +118,84 @@ jobs:
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
-            - name: Build and push
+            - name: Build
+              id: build
               if: github.event_name != 'pull_request' || steps.changed.outputs.any_changed == 'true'
               uses: docker/build-push-action@v7
               with:
-                  context: ${{ matrix.path }}
-                  platforms: linux/amd64,linux/arm64
-                  tags: ${{ matrix.tags }}
-                  push: ${{ github.event_name != 'pull_request' }}
-                  cache-from: type=gha
-                  cache-to: type=gha,mode=max
+                  context: ${{ matrix.image.path }}
+                  platforms: linux/${{ matrix.arch }}
+                  # Pushed untagged, by digest: the publish job tags both architectures at once.
+                  outputs: ${{ github.event_name != 'pull_request' && 'type=image,name=silarhi/php-apache,push-by-digest=true,name-canonical=true,push=true' || 'type=cacheonly' }}
+                  # One cache per image and architecture, so jobs don't overwrite each other's.
+                  cache-from: type=gha,scope=${{ matrix.image.path }}-${{ matrix.arch }}
+                  cache-to: type=gha,mode=max,scope=${{ matrix.image.path }}-${{ matrix.arch }}
+            - name: Export digest
+              if: github.event_name != 'pull_request'
+              env:
+                  DIGEST: ${{ steps.build.outputs.digest }}
+              run: |
+                  mkdir -p "$RUNNER_TEMP/digests"
+                  touch "$RUNNER_TEMP/digests/${DIGEST#sha256:}"
+            - name: Upload digest
+              if: github.event_name != 'pull_request'
+              uses: actions/upload-artifact@v7
+              with:
+                  name: digests-${{ matrix.image.path }}-${{ matrix.arch }}
+                  path: ${{ runner.temp }}/digests/*
+                  if-no-files-found: error
+                  retention-days: 1
+
+    publish:
+        name: Publish (${{ matrix.image.path }})
+        needs: [build]
+        # Publish each image whose two builds succeeded, even if another image failed.
+        if: ${{ !cancelled() && github.event_name != 'pull_request' }}
+        runs-on: ubuntu-24.04
+        timeout-minutes: 10
+        strategy:
+            fail-fast: false
+            matrix:
+                image: *images
+        steps:
+            - name: Download digests
+              uses: actions/download-artifact@v8
+              with:
+                  pattern: digests-${{ matrix.image.path }}-*
+                  path: ${{ runner.temp }}/digests
+                  merge-multiple: true
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v4
+            - name: Login to Docker Hub
+              uses: docker/login-action@v4
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Tag the multi-platform image
+              env:
+                  TAGS: ${{ matrix.image.tags }}
+              run: |
+                  shopt -s nullglob
+                  digests=("$RUNNER_TEMP"/digests/*)
+                  # Never move a tag to an image missing one of the architectures.
+                  if [ "${#digests[@]}" -ne 2 ]; then
+                      echo "::error::Expected an amd64 and an arm64 digest, found ${#digests[@]}"
+                      exit 1
+                  fi
+                  mapfile -t tags < <(grep . <<< "$TAGS")
+                  args=()
+                  for tag in "${tags[@]}"; do
+                      args+=(-t "$tag")
+                  done
+                  for digest in "${digests[@]}"; do
+                      args+=("silarhi/php-apache@sha256:${digest##*/}")
+                  done
+                  docker buildx imagetools create "${args[@]}"
+                  docker buildx imagetools inspect "${tags[0]}"
 
     ci-passed:
         name: CI passed
-        needs: [lint, build]
+        needs: [lint, build, publish]
         if: always()
         runs-on: ubuntu-latest
         timeout-minutes: 5
