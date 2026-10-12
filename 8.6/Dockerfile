@@ -2,6 +2,7 @@ FROM mlocati/php-extension-installer:latest AS php-extension-installer
 FROM php:8.6-rc-apache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0
 
 EXPOSE 80
 WORKDIR /app
@@ -18,13 +19,13 @@ RUN apt-get update -qq && \
     gnupg \
     unzip \
     zip && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /var/log/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # PHP Extensions
 COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions opcache pdo_mysql
-COPY --link conf/php.ini /usr/local/etc/php/conf.d/app.ini
+RUN install-php-extensions @composer opcache pdo_mysql
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+COPY --link conf/php.ini $PHP_INI_DIR/conf.d/app.ini
 
 # Apache
 COPY --link errors /errors
