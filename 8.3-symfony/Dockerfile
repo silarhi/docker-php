@@ -17,12 +17,11 @@ RUN apt-get update -qq && \
     gnupg \
     unzip \
     zip && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # PHP Extensions
 COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions intl opcache pdo_mysql zip
+RUN install-php-extensions @composer intl opcache pdo_mysql zip
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --link conf/php.ini $PHP_INI_DIR/conf.d/app.ini
 
