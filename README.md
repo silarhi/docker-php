@@ -80,3 +80,27 @@ PHP settings of the Apache and FrankenPHP images live in `conf/php.ini` (install
 | Environment variable | Default | Effect |
 |----------------------|---------|--------|
 | `PHP_OPCACHE_VALIDATE_TIMESTAMPS` | `0` | `opcache.validate_timestamps`. With `0`, PHP files are compiled once and never checked for changes: restart the container to deploy new code. Set it to `1` when the sources are mounted and edited in place (local development). |
+
+## Running Behind a Reverse Proxy
+
+The Apache and FrankenPHP images trust `X-Forwarded-*` headers from private networks (Docker, Traefik, load balancers)
+and from [Cloudflare's IP ranges](https://www.cloudflare.com/ips/), and resolve the proxy chain before PHP runs:
+
+- `REMOTE_ADDR` is the visitor IP, read right to left from `X-Forwarded-For` up to the first untrusted address
+  (`mod_remoteip` on Apache, `trusted_proxies` on FrankenPHP). `X-Forwarded-For` is not passed on to PHP.
+- `HTTPS` is `on` when the request reached the proxy over HTTPS (`X-Forwarded-Proto: https`).
+
+On FrankenPHP, `CADDY_TRUSTED_PROXIES_RANGES` replaces the trusted ranges. `X-Forwarded-Proto` is accepted from any
+client, so only expose the containers through the proxy.
+
+**Cloudflare → Traefik → container**: Traefik must trust Cloudflare as well. Otherwise it replaces `X-Forwarded-For`
+with the Cloudflare edge address, and every visitor shows up with a Cloudflare IP.
+
+```toml
+[entryPoints.websecure.forwardedHeaders]
+  trustedIPs = ["173.245.48.0/20", "103.21.244.0/22", "..."] # every range from https://www.cloudflare.com/ips/
+```
+
+**Symfony**: the chain is already resolved, so leave `framework.trusted_proxies` empty or set it to `private_ranges`.
+Don't use `REMOTE_ADDR`: it is now the visitor, and Symfony would trust the visitor's own `X-Forwarded-Port` header
+when generating URLs.
