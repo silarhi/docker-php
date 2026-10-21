@@ -173,7 +173,8 @@ jobs:
             - name: Download digests
               uses: actions/download-artifact@v8
               with:
-                  pattern: digests-${{ matrix.image.path }}-*
+                  # Name both architectures: `8.5-*` would also match 8.5-ci, 8.5-symfony...
+                  pattern: digests-${{ matrix.image.path }}-{amd64,arm64}
                   path: ${{ runner.temp }}/digests
                   merge-multiple: true
             - name: Set up Docker Buildx
