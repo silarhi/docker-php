@@ -11,10 +11,12 @@ on:
 permissions:
     contents: read
 
-# Supersede outdated runs of a pull request; push runs (head_ref empty) are never cancelled.
+# Supersede outdated runs of a pull request. Runs on main (push, schedule) are never cancelled
+# once started, but queue behind each other: two publishing at once hit Docker Hub's rate limit
+# (429). A queued run that a newer one replaces is cancelled before it builds anything.
 concurrency:
-    group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-    cancel-in-progress: true
+    group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+    cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
     lint:
@@ -203,7 +205,16 @@ jobs:
                   for digest in "${digests[@]}"; do
                       args+=("silarhi/php-apache@sha256:${digest##*/}")
                   done
-                  docker buildx imagetools create "${args[@]}"
+                  # The publish jobs all start together, which can trip Docker Hub's rate limit (429):
+                  # retry with a growing, jittered delay so they don't collide again.
+                  for attempt in 1 2 3 4; do
+                      docker buildx imagetools create "${args[@]}" && exit 0
+                      [ "$attempt" -eq 4 ] && break
+                      delay=$((30 * 2 ** (attempt - 1) + RANDOM % 30))
+                      echo "::warning::Tagging failed (attempt $attempt of 4), retrying in ${delay}s"
+                      sleep "$delay"
+                  done
+                  exit 1
 
     ci-passed:
         name: CI passed
