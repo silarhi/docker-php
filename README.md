@@ -9,6 +9,7 @@ Docker images for PHP 8.1 to 8.6 apps: Apache (Debian, with a Symfony variant), 
 * Demo: https://labs.silarhi.fr/php
 * Demo (404): https://labs.silarhi.fr/php/notfound
 * Docker image: https://hub.docker.com/r/silarhi/php-apache
+* Same tags on GHCR, without Docker Hub's pull rate limits: `ghcr.io/silarhi/php-apache` (e.g. `ghcr.io/silarhi/php-apache:8.5-frankenphp-alpine`)
 * Blog post: https://blog.silarhi.fr/image-docker-php-apache-parfaite/
 
 ## Available Images
