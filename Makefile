@@ -15,19 +15,23 @@ build: update
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.5-ci 8.5-ci
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.5-frankenphp-alpine 8.5-frankenphp-alpine
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.5-frankenphp-bookworm 8.5-frankenphp-bookworm
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.5-frankenphp-trixie 8.5-frankenphp-trixie
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.5-symfony 8.5-symfony
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.4 8.4
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.4-frankenphp-alpine 8.4-frankenphp-alpine
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.4-frankenphp-bookworm 8.4-frankenphp-bookworm
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.4-frankenphp-trixie 8.4-frankenphp-trixie
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.4-symfony 8.4-symfony
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.3 8.3
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.3-frankenphp-alpine 8.3-frankenphp-alpine
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.3-frankenphp-bookworm 8.3-frankenphp-bookworm
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.3-frankenphp-trixie 8.3-frankenphp-trixie
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.3-symfony 8.3-symfony
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.2 8.2
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.2-ci 8.2-ci
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.2-frankenphp-alpine 8.2-frankenphp-alpine
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.2-frankenphp-bookworm 8.2-frankenphp-bookworm
+	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.2-frankenphp-trixie 8.2-frankenphp-trixie
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.2-symfony 8.2-symfony
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.1 8.1
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.1-ci 8.1-ci

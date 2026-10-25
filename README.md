@@ -25,21 +25,25 @@ Docker images for PHP 8.1 to 8.6 apps: Apache (Debian, with a Symfony variant), 
 | 8.5 | `8.5-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-symfony) | Symfony apps |
 | 8.5 | `8.5-frankenphp-alpine` | Alpine | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-frankenphp-alpine) | Production (FrankenPHP) |
 | 8.5 | `8.5-frankenphp-bookworm` | Debian Bookworm | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-frankenphp-bookworm) | Production (FrankenPHP) |
+| 8.5 | `8.5-frankenphp-trixie` | Debian Trixie | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-frankenphp-trixie) | Production (FrankenPHP) |
 | 8.4 | `8.4` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4) | Production |
 | 8.4 | `8.4-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-ci) | CI/CD pipelines |
 | 8.4 | `8.4-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-symfony) | Symfony apps |
 | 8.4 | `8.4-frankenphp-alpine` | Alpine | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-frankenphp-alpine) | Production (FrankenPHP) |
 | 8.4 | `8.4-frankenphp-bookworm` | Debian Bookworm | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-frankenphp-bookworm) | Production (FrankenPHP) |
+| 8.4 | `8.4-frankenphp-trixie` | Debian Trixie | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-frankenphp-trixie) | Production (FrankenPHP) |
 | 8.3 | `8.3` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3) | Production |
 | 8.3 | `8.3-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-ci) | CI/CD pipelines |
 | 8.3 | `8.3-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-symfony) | Symfony apps |
 | 8.3 | `8.3-frankenphp-alpine` | Alpine | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-frankenphp-alpine) | Production (FrankenPHP) |
 | 8.3 | `8.3-frankenphp-bookworm` | Debian Bookworm | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-frankenphp-bookworm) | Production (FrankenPHP) |
+| 8.3 | `8.3-frankenphp-trixie` | Debian Trixie | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-frankenphp-trixie) | Production (FrankenPHP) |
 | 8.2 | `8.2` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2) | Production |
 | 8.2 | `8.2-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-ci) | CI/CD pipelines |
 | 8.2 | `8.2-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-symfony) | Symfony apps |
 | 8.2 | `8.2-frankenphp-alpine` | Alpine | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-frankenphp-alpine) | Production (FrankenPHP) |
 | 8.2 | `8.2-frankenphp-bookworm` | Debian Bookworm | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-frankenphp-bookworm) | Production (FrankenPHP) |
+| 8.2 | `8.2-frankenphp-trixie` | Debian Trixie | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-frankenphp-trixie) | Production (FrankenPHP) |
 | 8.1 | `8.1` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1) | Production |
 | 8.1 | `8.1-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1-ci) | CI/CD pipelines |
 | 8.1 | `8.1-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1-symfony) | Symfony apps |
@@ -71,7 +75,8 @@ These tags were last pushed on 2024-12-19. They are not part of the CI matrix an
 - **CI (`X.Y-ci`)**: Lightweight Alpine-based images optimized for CI/CD pipelines
 - **Symfony (`X.Y-symfony`)**: Enhanced images with additional extensions for Symfony applications (intl, zip)
 - **FrankenPHP Alpine (`X.Y-frankenphp-alpine`)**: Alpine-based images using FrankenPHP server for modern PHP apps
-- **FrankenPHP Bookworm (`X.Y-frankenphp-bookworm`)**: Debian-based images using FrankenPHP server for modern PHP apps
+- **FrankenPHP Trixie (`X.Y-frankenphp-trixie`)**: Debian Trixie-based images using FrankenPHP server for modern PHP apps
+- **FrankenPHP Bookworm (`X.Y-frankenphp-bookworm`)**: Same on Debian Bookworm, kept for existing users: prefer the Trixie variant
 
 ## Configuration
 

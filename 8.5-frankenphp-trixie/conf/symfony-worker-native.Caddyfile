@@ -1,0 +1,3 @@
+worker {
+	file /app/public/index.php
+}
