@@ -63,6 +63,8 @@ jobs:
                       tags: silarhi/php-apache:8.5-frankenphp-alpine
                     - path: '8.5-frankenphp-bookworm'
                       tags: silarhi/php-apache:8.5-frankenphp-bookworm
+                    - path: '8.5-frankenphp-trixie'
+                      tags: silarhi/php-apache:8.5-frankenphp-trixie
                     - path: '8.5-symfony'
                       tags: silarhi/php-apache:8.5-symfony
                     - path: '8.4'
@@ -73,6 +75,8 @@ jobs:
                       tags: silarhi/php-apache:8.4-frankenphp-alpine
                     - path: '8.4-frankenphp-bookworm'
                       tags: silarhi/php-apache:8.4-frankenphp-bookworm
+                    - path: '8.4-frankenphp-trixie'
+                      tags: silarhi/php-apache:8.4-frankenphp-trixie
                     - path: '8.4-symfony'
                       tags: silarhi/php-apache:8.4-symfony
                     - path: '8.3'
@@ -83,6 +87,8 @@ jobs:
                       tags: silarhi/php-apache:8.3-frankenphp-alpine
                     - path: '8.3-frankenphp-bookworm'
                       tags: silarhi/php-apache:8.3-frankenphp-bookworm
+                    - path: '8.3-frankenphp-trixie'
+                      tags: silarhi/php-apache:8.3-frankenphp-trixie
                     - path: '8.3-symfony'
                       tags: silarhi/php-apache:8.3-symfony
                     - path: '8.2'
@@ -93,6 +99,8 @@ jobs:
                       tags: silarhi/php-apache:8.2-frankenphp-alpine
                     - path: '8.2-frankenphp-bookworm'
                       tags: silarhi/php-apache:8.2-frankenphp-bookworm
+                    - path: '8.2-frankenphp-trixie'
+                      tags: silarhi/php-apache:8.2-frankenphp-trixie
                     - path: '8.2-symfony'
                       tags: silarhi/php-apache:8.2-symfony
                     - path: '8.1'

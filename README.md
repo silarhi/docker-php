@@ -26,21 +26,25 @@ Docker images for PHP 8.1 to 8.6 apps: Apache (Debian, with a Symfony variant), 
 | 8.5 | `8.5-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-symfony) | Symfony apps |
 | 8.5 | `8.5-frankenphp-alpine` | Alpine | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-frankenphp-alpine) | Production (FrankenPHP) |
 | 8.5 | `8.5-frankenphp-bookworm` | Debian Bookworm | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-frankenphp-bookworm) | Production (FrankenPHP) |
+| 8.5 | `8.5-frankenphp-trixie` | Debian Trixie | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.5-frankenphp-trixie) | Production (FrankenPHP) |
 | 8.4 | `8.4` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4) | Production |
 | 8.4 | `8.4-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-ci) | CI/CD pipelines |
 | 8.4 | `8.4-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-symfony) | Symfony apps |
 | 8.4 | `8.4-frankenphp-alpine` | Alpine | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-frankenphp-alpine) | Production (FrankenPHP) |
 | 8.4 | `8.4-frankenphp-bookworm` | Debian Bookworm | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-frankenphp-bookworm) | Production (FrankenPHP) |
+| 8.4 | `8.4-frankenphp-trixie` | Debian Trixie | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.4-frankenphp-trixie) | Production (FrankenPHP) |
 | 8.3 | `8.3` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3) | Production |
 | 8.3 | `8.3-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-ci) | CI/CD pipelines |
 | 8.3 | `8.3-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-symfony) | Symfony apps |
 | 8.3 | `8.3-frankenphp-alpine` | Alpine | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-frankenphp-alpine) | Production (FrankenPHP) |
 | 8.3 | `8.3-frankenphp-bookworm` | Debian Bookworm | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-frankenphp-bookworm) | Production (FrankenPHP) |
+| 8.3 | `8.3-frankenphp-trixie` | Debian Trixie | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.3-frankenphp-trixie) | Production (FrankenPHP) |
 | 8.2 | `8.2` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2) | Production |
 | 8.2 | `8.2-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-ci) | CI/CD pipelines |
 | 8.2 | `8.2-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-symfony) | Symfony apps |
 | 8.2 | `8.2-frankenphp-alpine` | Alpine | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-frankenphp-alpine) | Production (FrankenPHP) |
 | 8.2 | `8.2-frankenphp-bookworm` | Debian Bookworm | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-frankenphp-bookworm) | Production (FrankenPHP) |
+| 8.2 | `8.2-frankenphp-trixie` | Debian Trixie | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-frankenphp-trixie) | Production (FrankenPHP) |
 | 8.1 | `8.1` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1) | Production |
 | 8.1 | `8.1-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1-ci) | CI/CD pipelines |
 | 8.1 | `8.1-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1-symfony) | Symfony apps |
@@ -72,7 +76,8 @@ These tags were last pushed on 2024-12-19. They are not part of the CI matrix an
 - **CI (`X.Y-ci`)**: Lightweight Alpine-based images optimized for CI/CD pipelines
 - **Symfony (`X.Y-symfony`)**: Enhanced images with additional extensions for Symfony applications (intl, zip)
 - **FrankenPHP Alpine (`X.Y-frankenphp-alpine`)**: Alpine-based images using FrankenPHP server for modern PHP apps
-- **FrankenPHP Bookworm (`X.Y-frankenphp-bookworm`)**: Debian-based images using FrankenPHP server for modern PHP apps
+- **FrankenPHP Trixie (`X.Y-frankenphp-trixie`)**: Debian Trixie-based images using FrankenPHP server for modern PHP apps
+- **FrankenPHP Bookworm (`X.Y-frankenphp-bookworm`)**: Same on Debian Bookworm, kept for existing users: prefer the Trixie variant
 
 ## Configuration
 
@@ -81,6 +86,75 @@ PHP settings of the Apache and FrankenPHP images live in `conf/php.ini` (install
 | Environment variable | Default | Effect |
 |----------------------|---------|--------|
 | `PHP_OPCACHE_VALIDATE_TIMESTAMPS` | `0` | `opcache.validate_timestamps`. With `0`, PHP files are compiled once and never checked for changes: restart the container to deploy new code. Set it to `1` when the sources are mounted and edited in place (local development). |
+
+## Front Controller URLs
+
+The Symfony and FrankenPHP images answer `/index.php` and `/index.php/foo` with a 308 redirect to `/` and `/foo`,
+keeping the query string and the path prefix a proxy stripped (`X-Forwarded-Prefix`, sent by Traefik's
+`stripprefix`). Symfony strips the script name before routing, so these URLs would otherwise serve a
+duplicate of every page, and requests like `/index.php/admin` would slip past proxy rules written for `/admin`.
+The standard Apache images (`X.Y`) leave these URLs alone, for apps that rely on them.
+
+## FrankenPHP
+
+Prefer the Debian variants (`-trixie`) in production: PHP is
+[noticeably slower on musl](https://frankenphp.dev/docs/performance/#avoid-musl-in-production-prefer-glibc-builds)
+(Alpine), especially in the thread-safe build FrankenPHP uses.
+
+The default `/etc/frankenphp/Caddyfile` reads these environment variables:
+
+| Environment variable | Default | Effect |
+|----------------------|---------|--------|
+| `SERVER_NAME` | `:80` | Site address. Plain HTTP on port 80: TLS is left to the reverse proxy. |
+| `SERVER_ROOT` | `/app/public` | Document root. |
+| `FRANKENPHP_CONFIG` | | Options of the global [`frankenphp`](https://frankenphp.dev/docs/config/#caddyfile-config) block: workers, threads, `php_ini`... |
+| `FRANKENPHP_WORKER_CONFIG` | | Extra options of the Symfony worker below, e.g. `watch` in development. |
+| `CADDY_GLOBAL_OPTIONS`, `CADDY_SERVERS_CONFIG` | | Extra global options, and options of the `servers` block (e.g. `max_header_size 32KB`). |
+| `CADDY_SERVER_EXTRA_DIRECTIVES` | | Extra directives of the site block. |
+| `CADDY_EXTRA_CONFIG` | | Extra site blocks. You can also add `*.caddyfile` files to `/etc/frankenphp/Caddyfile.d/`. |
+
+### Worker mode (Symfony)
+
+```dockerfile
+# Symfony 7.4+ (native support in symfony/runtime)
+ENV FRANKENPHP_CONFIG="import symfony-worker-native.Caddyfile"
+# Symfony < 7.4, with runtime/frankenphp-symfony installed
+ENV FRANKENPHP_CONFIG="import symfony-worker.Caddyfile"
+```
+
+The worker is named `symfony` in logs and metrics. Its code stays in memory, so `PHP_OPCACHE_VALIDATE_TIMESTAMPS=1` is
+not enough to see changes in development: set `FRANKENPHP_WORKER_CONFIG=watch` to restart the worker when a `.env`,
+`.php`, `.twig` or `.yaml` file changes under `/app`.
+
+### Threads and memory
+
+By default FrankenPHP starts 2 PHP threads per CPU and never more. Size them from a load test, and keep
+`max_threads` × `memory_limit` below the container memory:
+
+```yaml
+# compose.yaml: one option per line, which a Dockerfile ENV can't hold
+services:
+    app:
+        environment:
+            # Scale up to what memory_limit allows, time out requests waiting more than 30s for a thread,
+            # and restart each thread after 500 requests to contain memory leaks.
+            FRANKENPHP_CONFIG: |
+                import symfony-worker-native.Caddyfile
+                max_threads auto
+                max_wait_time 30s
+                max_requests 500
+            # Let the Go runtime know the container memory limit.
+            GOMEMLIMIT: 900MiB
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
+```
+
+Since FrankenPHP 1.13, `num_threads` counts only the threads left for requests no worker serves: worker threads come on
+top of it. Caddy also limits request headers to 16 KiB, drops headers whose name contains `_` or `.`, and cuts off reads
+and writes stalled for 1 minute. Request bodies idle for 60s are aborted as well (`request_body_timeout` in
+`php_server`).
 
 ## Running Behind a Reverse Proxy
 
