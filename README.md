@@ -86,6 +86,14 @@ PHP settings of the Apache and FrankenPHP images live in `conf/php.ini` (install
 |----------------------|---------|--------|
 | `PHP_OPCACHE_VALIDATE_TIMESTAMPS` | `0` | `opcache.validate_timestamps`. With `0`, PHP files are compiled once and never checked for changes: restart the container to deploy new code. Set it to `1` when the sources are mounted and edited in place (local development). |
 
+## Front Controller URLs
+
+The Symfony and FrankenPHP images answer `/index.php` and `/index.php/foo` with a 308 redirect to `/` and `/foo`,
+keeping the query string and the path prefix a proxy stripped (`X-Forwarded-Prefix`, sent by Traefik's
+`stripprefix`). Symfony strips the script name before routing, so these URLs would otherwise serve a
+duplicate of every page, and requests like `/index.php/admin` would slip past proxy rules written for `/admin`.
+The standard Apache images (`X.Y`) leave these URLs alone, for apps that rely on them.
+
 ## FrankenPHP
 
 Prefer the Debian variants (`-trixie`) in production: PHP is

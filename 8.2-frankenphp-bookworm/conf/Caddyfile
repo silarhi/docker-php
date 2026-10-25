@@ -38,6 +38,18 @@
 	# Already resolved into REMOTE_ADDR: don't let PHP walk the proxy chain a second time.
 	request_header -X-Forwarded-For
 
+	# /index.php/foo would duplicate /foo (Symfony strips the script name before routing) and slip past proxy
+	# rules on /foo: redirect it to the clean URL, with a 308 so a POST stays a POST. redir runs before
+	# php_server rewrites requests to index.php.
+	# Keep the path prefix a proxy stripped (Traefik's stripprefix sends it as X-Forwarded-Prefix). Only a plain
+	# path is accepted: "//evil.com" would make this an open redirect.
+	map {http.request.header.X-Forwarded-Prefix} {forwarded_prefix} {
+		~^((?:/[\w.~-]+)+)/?$ "${1}"
+		default ""
+	}
+	@index_php path_regexp index_php ^/index\.php(?:/(.*))?$
+	redir @index_php {forwarded_prefix}/{re.index_php.1}{?query} 308
+
 	{$CADDY_SERVER_EXTRA_DIRECTIVES}
 
 	php_server {
