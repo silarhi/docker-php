@@ -1,3 +1,8 @@
+# Symfony 7.4+: symfony/runtime supports the FrankenPHP worker mode natively.
 worker {
 	file /app/public/index.php
+	# Label of the worker in logs and metrics, instead of the file path.
+	name symfony
+	# Extra worker options, e.g. FRANKENPHP_WORKER_CONFIG=watch to restart on file changes in development.
+	{$FRANKENPHP_WORKER_CONFIG}
 }
