@@ -86,6 +86,67 @@ PHP settings of the Apache and FrankenPHP images live in `conf/php.ini` (install
 |----------------------|---------|--------|
 | `PHP_OPCACHE_VALIDATE_TIMESTAMPS` | `0` | `opcache.validate_timestamps`. With `0`, PHP files are compiled once and never checked for changes: restart the container to deploy new code. Set it to `1` when the sources are mounted and edited in place (local development). |
 
+## FrankenPHP
+
+Prefer the Debian variants (`-trixie`) in production: PHP is
+[noticeably slower on musl](https://frankenphp.dev/docs/performance/#avoid-musl-in-production-prefer-glibc-builds)
+(Alpine), especially in the thread-safe build FrankenPHP uses.
+
+The default `/etc/frankenphp/Caddyfile` reads these environment variables:
+
+| Environment variable | Default | Effect |
+|----------------------|---------|--------|
+| `SERVER_NAME` | `:80` | Site address. Plain HTTP on port 80: TLS is left to the reverse proxy. |
+| `SERVER_ROOT` | `/app/public` | Document root. |
+| `FRANKENPHP_CONFIG` | | Options of the global [`frankenphp`](https://frankenphp.dev/docs/config/#caddyfile-config) block: workers, threads, `php_ini`... |
+| `FRANKENPHP_WORKER_CONFIG` | | Extra options of the Symfony worker below, e.g. `watch` in development. |
+| `CADDY_GLOBAL_OPTIONS`, `CADDY_SERVERS_CONFIG` | | Extra global options, and options of the `servers` block (e.g. `max_header_size 32KB`). |
+| `CADDY_SERVER_EXTRA_DIRECTIVES` | | Extra directives of the site block. |
+| `CADDY_EXTRA_CONFIG` | | Extra site blocks. You can also add `*.caddyfile` files to `/etc/frankenphp/Caddyfile.d/`. |
+
+### Worker mode (Symfony)
+
+```dockerfile
+# Symfony 7.4+ (native support in symfony/runtime)
+ENV FRANKENPHP_CONFIG="import symfony-worker-native.Caddyfile"
+# Symfony < 7.4, with runtime/frankenphp-symfony installed
+ENV FRANKENPHP_CONFIG="import symfony-worker.Caddyfile"
+```
+
+The worker is named `symfony` in logs and metrics. Its code stays in memory, so `PHP_OPCACHE_VALIDATE_TIMESTAMPS=1` is
+not enough to see changes in development: set `FRANKENPHP_WORKER_CONFIG=watch` to restart the worker when a `.env`,
+`.php`, `.twig` or `.yaml` file changes under `/app`.
+
+### Threads and memory
+
+By default FrankenPHP starts 2 PHP threads per CPU and never more. Size them from a load test, and keep
+`max_threads` × `memory_limit` below the container memory:
+
+```yaml
+# compose.yaml: one option per line, which a Dockerfile ENV can't hold
+services:
+    app:
+        environment:
+            # Scale up to what memory_limit allows, time out requests waiting more than 30s for a thread,
+            # and restart each thread after 500 requests to contain memory leaks.
+            FRANKENPHP_CONFIG: |
+                import symfony-worker-native.Caddyfile
+                max_threads auto
+                max_wait_time 30s
+                max_requests 500
+            # Let the Go runtime know the container memory limit.
+            GOMEMLIMIT: 900MiB
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
+```
+
+Since FrankenPHP 1.13, `num_threads` counts only the threads left for requests no worker serves: worker threads come on
+top of it. Caddy also limits request headers to 16 KiB, drops headers whose name contains `_` or `.`, and cuts off reads
+and writes stalled for 1 minute. Request bodies idle for 60s are aborted as well (`request_body_timeout` in
+`php_server`).
+
 ## Running Behind a Reverse Proxy
 
 The Apache and FrankenPHP images trust `X-Forwarded-*` headers from private networks (Docker, Traefik, load balancers)
