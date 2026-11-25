@@ -109,12 +109,6 @@ jobs:
                       tags: silarhi/php-apache:8.2-frankenphp-trixie
                     - path: '8.2-symfony'
                       tags: silarhi/php-apache:8.2-symfony
-                    - path: '8.1'
-                      tags: silarhi/php-apache:8.1
-                    - path: '8.1-ci'
-                      tags: silarhi/php-apache:8.1-ci
-                    - path: '8.1-symfony'
-                      tags: silarhi/php-apache:8.1-symfony
         steps:
             - name: Checkout
               uses: actions/checkout@v7
