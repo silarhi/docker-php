@@ -15,4 +15,4 @@ RUN apk add --no-cache \
 
 # PHP Extensions
 COPY --from=php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions @composer intl opcache zip
+RUN install-php-extensions @composer intl mbstring opcache zip
