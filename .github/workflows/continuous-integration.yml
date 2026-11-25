@@ -51,6 +51,12 @@ jobs:
                       tags: silarhi/php-apache:8.6
                     - path: '8.6-ci'
                       tags: silarhi/php-apache:8.6-ci
+                    - path: '8.6-frankenphp-alpine'
+                      tags: silarhi/php-apache:8.6-frankenphp-alpine
+                    - path: '8.6-frankenphp-bookworm'
+                      tags: silarhi/php-apache:8.6-frankenphp-bookworm
+                    - path: '8.6-frankenphp-trixie'
+                      tags: silarhi/php-apache:8.6-frankenphp-trixie
                     - path: '8.6-symfony'
                       tags: silarhi/php-apache:8.6-symfony
                     - path: '8.5'
