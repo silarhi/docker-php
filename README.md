@@ -1,8 +1,8 @@
 # Docker PHP
 [![Continuous Integration](https://github.com/silarhi/docker-php/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/silarhi/docker-php/actions/workflows/continuous-integration.yml)
 
-Docker images for PHP 8.1 to 8.6 apps: Apache (Debian, with a Symfony variant), FrankenPHP (Debian or Alpine) and CI
-(Alpine). Legacy images for PHP 5.6 to 8.0 are still available but are no longer rebuilt automatically.
+Docker images for PHP 8.2 to 8.6 apps: Apache (Debian, with a Symfony variant), FrankenPHP (Debian or Alpine) and CI
+(Alpine). Legacy images for PHP 5.6 to 8.1 are still available but are no longer rebuilt automatically.
 
 * GitHub: https://github.com/silarhi/docker-php
 * Demo: https://labs.silarhi.fr/php
@@ -47,17 +47,17 @@ Docker images for PHP 8.1 to 8.6 apps: Apache (Debian, with a Symfony variant), 
 | 8.2 | `8.2-frankenphp-alpine` | Alpine | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-frankenphp-alpine) | Production (FrankenPHP) |
 | 8.2 | `8.2-frankenphp-bookworm` | Debian Bookworm | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-frankenphp-bookworm) | Production (FrankenPHP) |
 | 8.2 | `8.2-frankenphp-trixie` | Debian Trixie | FrankenPHP | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.2-frankenphp-trixie) | Production (FrankenPHP) |
-| 8.1 | `8.1` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1) | Production |
-| 8.1 | `8.1-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1-ci) | CI/CD pipelines |
-| 8.1 | `8.1-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1-symfony) | Symfony apps |
 
 ### Legacy Versions
 
-These tags were last pushed on 2024-12-19. They are not part of the CI matrix and are only rebuilt by hand with
-`make build-legacy`, so they no longer receive OS or PHP security updates.
+The 8.1 tags were last pushed on 2026-11-22, the older ones on 2024-12-19. They are not part of the CI matrix and are
+only rebuilt by hand with `make build-legacy`, so they no longer receive OS or PHP security updates.
 
 | PHP Version | Tag | Base OS | Web Server | Public Folder | Size | Usage |
 |-------------|-----|---------|------------|---------------|------|-------|
+| 8.1 | `8.1` | Debian Trixie | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1) | Production (Legacy) |
+| 8.1 | `8.1-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1-ci) | CI/CD pipelines (Legacy) |
+| 8.1 | `8.1-symfony` | Debian Trixie | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.1-symfony) | Symfony apps (Legacy) |
 | 8.0 | `8.0` | Debian Bullseye | Apache | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.0) | Production (Legacy) |
 | 8.0 | `8.0-ci` | Alpine | - | `/app` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.0-ci) | CI/CD pipelines (Legacy) |
 | 8.0 | `8.0-symfony` | Debian Bullseye | Apache | `/app/public` | ![Docker Image Size](https://img.shields.io/docker/image-size/silarhi/php-apache/8.0-symfony) | Symfony apps (Legacy) |

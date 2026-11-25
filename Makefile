@@ -36,11 +36,11 @@ build: update
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.2-frankenphp-bookworm 8.2-frankenphp-bookworm
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.2-frankenphp-trixie 8.2-frankenphp-trixie
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.2-symfony 8.2-symfony
+
+build-legacy: update
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.1 8.1
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.1-ci 8.1-ci
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.1-symfony 8.1-symfony
-
-build-legacy: update
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.0 8.0
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.0-ci 8.0-ci
 	$(DOCKER_BUILD_AND_PUSH) -t silarhi/php-apache:8.0-symfony 8.0-symfony
