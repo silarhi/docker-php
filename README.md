@@ -181,3 +181,7 @@ with the Cloudflare edge address, and every visitor shows up with a Cloudflare I
 **Symfony**: the chain is already resolved, so leave `framework.trusted_proxies` empty or set it to `private_ranges`.
 Don't use `REMOTE_ADDR`: it is now the visitor, and Symfony would trust the visitor's own `X-Forwarded-Port` header
 when generating URLs.
+
+## Maintainer
+
+Maintained by [Guillaume Sainthillier](https://sainthillier.fr), freelance PHP / Symfony developer, for [SILARHI](https://silarhi.fr).
